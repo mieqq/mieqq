@@ -6,6 +6,8 @@ var obj = JSON.parse(body);
 
 if (url.indexOf(user_info) != -1) {
 	obj['data']['coins'] = 999;
+	obj['data']['Uviptime'] = 6847833600000;
+	obj['data']['vipdate'] = "2030-01-01 00:00:00";
 	obj['data']['isvip'] = 1;
 	obj['data']['vipdays'] = 999;
 	obj['data']['recommend'] = 999;
@@ -23,7 +25,7 @@ if (url.indexOf(user_info) != -1) {
 	obj['data']['Cgold'] = 999;	
 	obj['data']['Cticket'] = 999;
 	obj['data']['Cdiamonds'] = 999;
-	obj['data']['status'] = 0;
+	obj['status'] = 0;
 }
 
 JSON.stringify(obj);
