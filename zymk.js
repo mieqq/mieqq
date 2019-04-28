@@ -23,7 +23,7 @@ if (url.indexOf(user_info) != -1) {
 	obj['data']['Cgold'] = 999;	
 	obj['data']['Cticket'] = 999;
 	obj['data']['Cdiamonds'] = 999;
-	obj['data']['vipdays'] = 999;
+	obj['data']['status'] = 0;
 }
 
 JSON.stringify(obj);
