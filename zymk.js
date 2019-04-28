@@ -26,6 +26,7 @@ if (url.indexOf(user_info) != -1) {
 	obj['data']['Cticket'] = 999;
 	obj['data']['Cdiamonds'] = 999;
 	obj['status'] = 0;
+	obj['msg'] = "ok";
 }
 
 JSON.stringify(obj);
