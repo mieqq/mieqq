@@ -17,33 +17,33 @@ function FTPYStr()
 
 function Traditionalized( cc )
 {
-	var str = '';
+	var temArr = [];
 	var ss = JTPYStr();
 	var tt = FTPYStr();
 
 	for(var i = 0 ; i < cc.length ; i++ )
 	{
 		if( cc.charCodeAt(i) > 10000 && ss.indexOf( cc.charAt(i) ) != -1 )
-			str += tt.charAt( ss.indexOf( cc.charAt(i) ) );
+		temArr.push(tt.charAt( ss.indexOf( cc.charAt(i) ) ));
 		else 
-			str += cc.charAt(i);
+			temArr.push(cc.charAt(i));
 	}
-	return str;
+	return temArr.join('');
 }
 
 function Simplized(cc){
-	var str = '';
+	var temArr = [];
 	var ss = JTPYStr();
 	var tt = FTPYStr();
 
 	for( var i=0 ; i < cc.length ; i++)
 	{
 		if( cc.charCodeAt(i) > 10000 && tt.indexOf( cc.charAt(i) ) != -1 )
-			str += ss.charAt( tt.indexOf( cc.charAt(i) ) );
+		temArr.push(ss.charAt( tt.indexOf( cc.charAt(i) ) ));
 		else 
-			str += cc.charAt(i);
+			temArr.push(cc.charAt(i));
 	}
-	return str;
+	return temArr.join('');
 }
 
 var result = body;
