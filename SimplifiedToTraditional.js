@@ -20,8 +20,8 @@ function Traditionalized( cc )
 	var temArr = [];
 	var ss = JTPYStr();
 	var tt = FTPYStr();
-
-	for(var i = 0 ; i < cc.length ; i++ )
+	let cc_length = cc.length
+	for(var i = 0 ; i < cc_length ; i++ )
 	{
 		if( cc.charCodeAt(i) > 10000 && ss.indexOf( cc.charAt(i) ) != -1 )
 		temArr.push(tt.charAt( ss.indexOf( cc.charAt(i) ) ));
