@@ -11,7 +11,6 @@ if (url.indexOf(user_info) != -1) {
 	obj['data']['recommend'] = 999;
 	obj['data']['Cticket'] = 999;
 	obj['data']['Cgold'] = 999;
-	obj['data']['vipdays'] = 999;
 } else if (url.indexOf(coin_account) != -1) {
 	obj['data']['coins'] = 999;
 	obj['data']['golds'] = 999;
