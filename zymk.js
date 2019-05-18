@@ -1,7 +1,7 @@
 let user_info = '/app_api/v5/getuserinfo/';
 let coin_account = '/app_api/v5/coin_account/';
 let ticket = '/app_api/v5/getuserinfo_ticket/';
-//let purchase = '/app_api/v5/purchase_chapters_coin/';
+// let purchase = '/app_api/v5/purchase_chapters_coin/';
 var obj = JSON.parse(body);
 
 if (url.indexOf(user_info) != -1) {
@@ -20,3 +20,7 @@ if (url.indexOf(user_info) != -1) {
 } 
 
 JSON.stringify(obj);
+
+// http-response getuserinfo-globalapi.zymk.cn script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/zymk.js
+
+// hostname = getuserinfo-globalapi.zymk.cn
