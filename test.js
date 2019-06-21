@@ -1,5 +1,3 @@
-const URL_PREFIX = "https://dlercloud.me";
-
 //async function checkin() {
 //	let resp = await $httpClient.post({
 //		url: URL_PREFIX + "/user/checkin"
@@ -8,7 +6,7 @@ const URL_PREFIX = "https://dlercloud.me";
 //}
 
 
-let test = $httpClient.get(URL_PREFIX + "/user/logout");
+let test = $httpClient.get("https://dlercloud.me/user/logout");
 console.log(test.error)
 
 
