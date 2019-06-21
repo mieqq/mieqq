@@ -12,8 +12,6 @@
 //		}
 //});
 
-$httpClient.post({
-		url: "https://dlercloud.me/user/checkin"
-});
+$httpClient.post("https://dlercloud.me/user/checkin");
 
 $done();
