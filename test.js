@@ -13,10 +13,10 @@ let test = $httpClient.post({
 			"Content-Type": "application/json"
 		},
 		body: {
-			"email": email,
-			"passwd": passwd,
+			"email": "619478198@qq.com",
+			"passwd": "qq940614",
 			"number-me": "",
-			"code": code,
+			"code": "",
 			"remember_me": 'on'
 		}
 	}, cb1);
