@@ -5,15 +5,21 @@
 //	return resp.data;
 //}
 
-function cb1(value){ console.log(value) }
+function cb1(value){ console.log(value.error) }
 
 let test = $httpClient.post({
-  url: "http://www.example.com/",
-	headers: {
-    "Content-Type": "application/json"
-	},
-  body: "{}"
-}, cb1);
+		url: URL_PREFIX + "/auth/login",
+		header: {
+			"Content-Type": "application/json"
+		},
+		body: {
+			"email": email,
+			"passwd": passwd,
+			"number-me": "",
+			"code": code,
+			"remember_me": 'on'
+		}
+	}, cb1);
 
 
 
