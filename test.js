@@ -7,10 +7,10 @@ const URL_PREFIX = "https://dlercloud.me";
 //	return resp.data;
 //}
 
-async function logout() {
-	let test = await $httpClient.get(URL_PREFIX + "/user/logout");
-	console.log(test.error)
-}
+
+let test = $httpClient.get(URL_PREFIX + "/user/logout");
+console.log(test.error)
+
 
 //async function login(email, passwd, code = '') {
 //	await logout()
@@ -34,5 +34,4 @@ async function logout() {
 
 //let loginRes = login('619478198@qq.com', 'qq940614', '')
 
-logout()
 $done({})
