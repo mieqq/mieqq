@@ -6,8 +6,16 @@
 //}
 
 
-let test = $httpClient.get("https://dlercloud.me/user/logout");
-console.log(test.error)
+let test = $httpClient.post({
+  url: "http://www.example.com/",
+	headers: {
+    Content-Type: "application/json"
+	},
+  body: "{}"
+});
+
+console.log(test)
+
 
 
 //async function login(email, passwd, code = '') {
