@@ -1,5 +1,5 @@
 $httpClient.post({
-		url: "https://dlercloud.me/auth/login",
+		url: "https://dlercloud.com/auth/login",
 		headers: {
 			"Content-Type": "application/json"
 		},
@@ -13,7 +13,7 @@ $httpClient.post({
 });
 
 $httpClient.post({
-  url: "https://dlercloud.me/user/checkin",
+  url: "https://dlercloud.com/user/checkin",
   body: "{}"
 });
 
