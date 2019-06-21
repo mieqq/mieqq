@@ -26,12 +26,11 @@ async function login(email, passwd, code = '') {
 			"remember_me": 'on'
 		}
 	})
-
+	console.log(resp.error)
 //	await checkin()
 }
 
 
 let loginRes = login('619478198@qq.com', 'qq940614', '')
-console.log(loginRes.error)
 
-$done()
+$done({})
