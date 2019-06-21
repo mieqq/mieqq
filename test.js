@@ -3,7 +3,7 @@ function cb1(error, response, data){
 }
 
 function cb2(error, response, data){
-	console.log(JSON.parse(data).msg);
+	console.log(data);
 }
 
 
