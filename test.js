@@ -1,4 +1,5 @@
-function cb1(){
+function cb1(error, response, data){
+    console.log(JSON.parse(data).msg)
 	$httpClient.post("https://dlercloud.me/user/checkin", cb2);
 	$done();
 }
