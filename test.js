@@ -1,6 +1,5 @@
 function cb1(error, response, data){
 	$httpClient.post("https://dlercloud.me/user/checkin", cb2)
-	$done()
 }
 
 function cb2(error, response, data){
