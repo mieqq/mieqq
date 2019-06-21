@@ -32,4 +32,6 @@ async function login(email, passwd, code = '') {
 
 
 let loginRes = login('619478198@qq.com', 'qq940614', '')
-console.log(loginRes.data)
+console.log(loginRes.error)
+
+$done()
