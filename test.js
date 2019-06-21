@@ -1,9 +1,9 @@
-function cb1(error, response, data){
+function cb1(){
 	$httpClient.post("https://dlercloud.me/user/checkin", cb2);
 }
 
-function cb2(error, response, data){
-	console.log(response.status);
+function cb2(){
+	console.log(data);
 	$done();
 }
 
