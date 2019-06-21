@@ -12,6 +12,11 @@
 //		}
 //});
 
-const a = $httpClient.post("https://dlercloud.me/user/checkin");
+const a = $httpClient.post({
+  url: "https://dlercloud.me/user/checkin",
+  body: "{}"
+});
 console.log(a)
 $done();
+
+
