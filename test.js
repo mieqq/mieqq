@@ -4,7 +4,7 @@ function cb1(error, response, data){
 }
 
 function cb2(error, response, data){
-	console.log(data);
+	console.log(response.status);
 	$done();
 }
 
