@@ -2,7 +2,7 @@ function cb1(error, response, data){
 		console.log(data);
 		 }
 
-$http.post({
+$httpClient.post({
 		url: "https://dlercloud.me/auth/login",
 		header: {
 			"Content-Type": "application/json"
