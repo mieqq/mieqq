@@ -5,6 +5,7 @@
 //	return resp.data;
 //}
 
+function cb1(value){ console.log(value) }
 
 let test = $httpClient.post({
   url: "http://www.example.com/",
@@ -12,9 +13,8 @@ let test = $httpClient.post({
     Content-Type: "application/json"
 	},
   body: "{}"
-});
+}, cb1);
 
-console.log(test)
 
 
 
