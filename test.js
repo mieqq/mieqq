@@ -1,4 +1,4 @@
-function cb1(value){ console.log(value.error) }
+function cb1(value){ console.log(value) }
 
 let test = $httpClient.post({
 		url: "https://dlercloud.me/auth/login",
