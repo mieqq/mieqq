@@ -2,22 +2,19 @@ function cb1(error, response, data){
 		console.log(data);
 		 }
 
-
-async function login(email, passwd, code = '') {
-	let resp = await $http.post({
+$http.post({
 		url: "https://dlercloud.me/auth/login",
 		header: {
 			"Content-Type": "application/json"
 		},
 		body: {
-			"email": email,
-			"passwd": passwd,
+			"email": "619478198@qq.com",
+			"passwd": "qq940614",
 			"number-me": "",
-			"code": code,
+			"code": "",
 			"remember_me": 'on'
 		}
 }, cb1)
 
-login("619478198@qq.com", "qq940614", "")
 	
 $done({})
