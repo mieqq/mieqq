@@ -1,12 +1,11 @@
 function cb1(error, response, data){
-    console.log(JSON.parse(data).msg)
+    console.log(error)
 	$httpClient.post("https://dlercloud.me/user/checkin", cb2);
 	$done();
 }
 
 function cb2(error, response, data){
-	console.log(data);
-	$done();
+	console.log("1")
 }
 
 
