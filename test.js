@@ -12,6 +12,6 @@
 //		}
 //});
 
-$httpClient.post("https://dlercloud.me/user/checkin");
-
+const a = $httpClient.post("https://dlercloud.me/user/checkin");
+console.log(a)
 $done();
