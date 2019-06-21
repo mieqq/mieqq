@@ -1,5 +1,3 @@
-function cb1(value){ console.log(value) }
-
 $httpClient.post({
 		url: "https://dlercloud.me/auth/login",
 		header: {
@@ -12,6 +10,8 @@ $httpClient.post({
 			"code": "",
 			"remember_me": 'on'
 		}
-	}, cb1);
+	}, cb1(error, response, data){
+		console.log(error) 
+		 });
 
 $done({})
