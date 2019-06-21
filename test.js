@@ -2,11 +2,10 @@ function cb1(error, response, data){
 		console.log(data);
 		 }
 
-$httpClient.get("https://www.baidu.com/", cb1);
 
 async function login(email, passwd, code = '') {
 	let resp = await $http.post({
-		url: URL_PREFIX + "/auth/login",
+		url: "https://dlercloud.me/auth/login",
 		header: {
 			"Content-Type": "application/json"
 		},
@@ -21,5 +20,4 @@ async function login(email, passwd, code = '') {
 
 login("619478198@qq.com", "qq940614", "")
 	
-
 $done({})
