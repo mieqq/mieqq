@@ -5,6 +5,6 @@ function cb1(error, response, data){
 $httpClient.get({
 		url: "https://www.baidu.com/",
 		}
-	}, cb1);
+	}, cb1(error, response, data));
 
 $done({})
