@@ -1,22 +1,35 @@
-$httpClient.post({
-		url: "https://dlercloud.com/auth/login",
-		headers: {
+const URL_PREFIX = "https://dlercloud.me";
+
+async function checkin() {
+	let resp = await $http.post({
+		url: URL_PREFIX + "/user/checkin"
+	});
+	return resp.data;
+}
+
+async function logout() {
+	await $http.get(URL_PREFIX + "/user/logout");
+}
+
+async function login(email, passwd, code = '') {
+	await logout()
+	let resp = await $http.post({
+		url: URL_PREFIX + "/auth/login",
+		header: {
 			"Content-Type": "application/json"
 		},
 		body: {
-			"email": "619478198@qq.com",
-			"passwd": "qq940614",
+			"email": email,
+			"passwd": passwd,
 			"number-me": "",
-			"code": "",
-			"remember_me": "on"
+			"code": code,
+			"remember_me": 'on'
 		}
-});
-
-$httpClient.post({
-  url: "https://dlercloud.com/user/checkin",
-  body: "{}"
-});
-
-$done()
+	})
+	return resp.data;
+}
 
 
+let loginRes = login('619478198@qq.com', 'qq940614', '')
+console.log("-----------------------------")
+console.log(loginRes.ret)
