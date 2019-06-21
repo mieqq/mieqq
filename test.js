@@ -8,7 +8,7 @@
 function cb1(value){ console.log(value.error) }
 
 let test = $httpClient.post({
-		url: URL_PREFIX + "/auth/login",
+		url: "https://dlercloud.me/auth/login",
 		header: {
 			"Content-Type": "application/json"
 		},
