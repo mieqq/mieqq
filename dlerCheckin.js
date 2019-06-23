@@ -28,9 +28,9 @@ $httpClient.post(table, function(error, response, data){
 );
 
 
-//1. 自行下载放到 Surge 配置的文件夹中，
+//1. 自行下载放到 Surge 配置的文件夹中，并重命名为 dlerCheckin.js
 //2. 在table那填入账户密码如 "emali": "xxx@qq.com", "passwd": "123456"
 //3. 配置文件填入如下
 //[Script]
-//cron "0 * * * *" script-path=test.js
+//cron "0 * * * *" script-path=dlerCheckin.js
 //4. 需要通知可以取消 $notification 行的注释
