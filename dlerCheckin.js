@@ -24,12 +24,11 @@ $httpClient.post(table, function(error, response, data){
 			$done();
 		});
 	}	
-}
-);
+});
 
 
-//0. Dler 机场定时签到，仅供参考
-//1. 自行下载放到 Surge 配置的文件夹中，
+//0. Dler 机场定时签到，没有什么实际意义，仅供参考
+//1. 自行下载放到 Surge 配置的文件夹中
 //2. 在table那填入账户密码如 "emali": "xxx@qq.com", "passwd": "123456"
 //3. 配置文件填入如下
 //[Script]
