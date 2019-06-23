@@ -28,9 +28,11 @@ $httpClient.post(table, function(error, response, data){
 );
 
 
-//1. 自行下载放到 Surge 配置的文件夹中，并重命名为 dlerCheckin.js
+//0. Dler 机场定时签到，仅供参考
+//1. 自行下载放到 Surge 配置的文件夹中，
 //2. 在table那填入账户密码如 "emali": "xxx@qq.com", "passwd": "123456"
 //3. 配置文件填入如下
 //[Script]
-//cron "0 * * * *" script-path=dlerCheckin.js
-//4. 需要通知可以取消 $notification 行的注释
+//cron "0 * * * *" script-path=test.js
+//4. 上面的 crontab "0 * * * *" 为每小时0分触发，可以自己查表更改
+//5. 需要通知可以取消 $notification 行的注释
