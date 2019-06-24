@@ -21,18 +21,14 @@ $httpClient.post(table, function(error, response, data){
 			let checkin = JSON.parse(data).msg
 			$httpClient.get("https://dlercloud.io/user", function(error, response, data){		
 				let detailRege = /(可用：.*?(?:K|M|G|T)B)[\s\S]*?(已用：.*?(?:K|M|G|T)B)/
-				if (detailRege.test(data)) {
-					let userinfo = `${RegExp.$1} / ${RegExp.$2}`
-				}
+				let match = detailRege.test(data)
+				let userinfo = `${RegExp.$1} / ${RegExp.$2}`
 				$notification.post('Dler Cloud', checkin, userinfo);
 				$done();
 			});
 		});		
 	}	
 });
-
-
-
 
 //0. Dler 机场定时签到, 没有什么实际意义, 仅供参考
 //1. 自行下载放到 Surge 配置的文件夹中
