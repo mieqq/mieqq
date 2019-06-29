@@ -1,24 +1,24 @@
-let user_info = '/app_api/v5/getuserinfo/';
-let coin_account = '/app_api/v5/coin_account/';
+let user = '/app_api/v5/getuserinfo/';
+let coin = '/app_api/v5/coin_account/';
 let ticket = '/app_api/v5/getuserinfo_ticket/';
-// let purchase = '/app_api/v5/purchase_chapters_coin/';
 
-let url = $request.url;
-let body = "";
+try {
+let body = JSON.parse($response.body);
+}
+catch(error) {
+$done();
+}
 
-if (url.indexOf(user_info) != -1) {
-    body = JSON.parse($response.body);
+if ($request.url.indexOf(user) != -1) {
 	body.data.coins = 999;
 	body.data.isvip = 1;
 	body.data.recommend = 999;
 	body.data.Cticket = 999;
 	body.data.Cgold = 999;
-} else if (url.indexOf(coin_account) != -1) {
-    body = JSON.parse($response.body);
+} else if ($request.url.indexOf(coin) != -1) {
 	body.data.coins = 999;
 	body.data.golds = 999;
-} else if (url.indexOf(ticket) != -1) {
-    body = JSON.parse($response.body);
+} else if ($request.url.indexOf(ticket) != -1) {
 	body.data.Cticket = 999;	
 } else {
     $done();
