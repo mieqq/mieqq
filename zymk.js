@@ -16,7 +16,9 @@ if (url.indexOf(user_info) != -1) {
 	body.data.golds = 999;
 } else if (url.indexOf(ticket) != -1) {
 	body.data.Cticket = 999;	
-} 
+} else {
+    $done();
+}
 
 body = JSON.stringify(body);
 
