@@ -7,7 +7,7 @@ try {
 body = JSON.parse($response.body);
 }
 catch(error) {
-$done(undefined);
+$done();
 }
 
 if ($request.url.indexOf(user) != -1) {
@@ -22,7 +22,7 @@ if ($request.url.indexOf(user) != -1) {
 } else if ($request.url.indexOf(ticket) != -1) {
 	body.data.Cticket = 999;	
 } else {
-    $done(undefined);
+    $done();
 }
 
 body = JSON.stringify(body);
