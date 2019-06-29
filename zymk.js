@@ -15,8 +15,7 @@ if (url.indexOf(user_info) != -1) {
 	body.data.coins = 999;
 	body.data.golds = 999;
 } else if (url.indexOf(ticket) != -1) {
-	body.data.Cticket = 999;
-	body.data.recommend = 999;	
+	body.data.Cticket = 999;	
 } 
 
 body = JSON.stringify(body);
