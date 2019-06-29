@@ -4,20 +4,21 @@ let ticket = '/app_api/v5/getuserinfo_ticket/';
 // let purchase = '/app_api/v5/purchase_chapters_coin/';
 
 let url = $request.url;
+let body = "";
 
 if (url.indexOf(user_info) != -1) {
-    let body = JSON.parse($response.body);
+    body = JSON.parse($response.body);
 	body.data.coins = 999;
 	body.data.isvip = 1;
 	body.data.recommend = 999;
 	body.data.Cticket = 999;
 	body.data.Cgold = 999;
 } else if (url.indexOf(coin_account) != -1) {
-    let body = JSON.parse($response.body);
+    body = JSON.parse($response.body);
 	body.data.coins = 999;
 	body.data.golds = 999;
 } else if (url.indexOf(ticket) != -1) {
-    let body = JSON.parse($response.body);
+    body = JSON.parse($response.body);
 	body.data.Cticket = 999;	
 } else {
     $done();
