@@ -3,6 +3,7 @@ let coin_account = '/app_api/v5/coin_account/';
 let ticket = '/app_api/v5/getuserinfo_ticket/';
 // let purchase = '/app_api/v5/purchase_chapters_coin/';
 let body = JSON.parse($response.body);
+let url = $request.url;
 
 if (url.indexOf(user_info) != -1) {
 	body.data.coins = 999;
