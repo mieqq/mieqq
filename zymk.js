@@ -19,6 +19,8 @@ if (url.indexOf(user_info) != -1) {
 	body.data.recommend = 999;	
 } 
 
+body = JSON.stringify(body);
+
 $done({body});
 
 // http-response getuserinfo-globalapi.zymk.cn script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/zymk.js,requires-body = true
