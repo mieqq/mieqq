@@ -22,7 +22,7 @@ if ($request.url.indexOf(user) != -1) {
 } else if ($request.url.indexOf(ticket) != -1) {
 	body.data.Cticket = 999;	
 } else {
-    $done();
+    $done({});
 }
 
 body = JSON.stringify(body);
