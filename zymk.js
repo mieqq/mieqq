@@ -7,6 +7,7 @@ let body = JSON.parse($response.body);
 if ($request.url.indexOf(user) != -1) {
 	body.data.coins = 999;
 	body.data.isvip = 1;
+	body.data.vipdays = 999;
 	body.data.recommend = 999;
 	body.data.Cticket = 999;
 	body.data.Cgold = 999;
