@@ -2,7 +2,7 @@ let user = '/app_api/v5/getuserinfo/';
 let coin = '/app_api/v5/coin_account/';
 let ticket = '/app_api/v5/getuserinfo_ticket/';
 
-let body = JSON.parse(response.body);
+let body = JSON.parse($response.body);
 
 if ($request.url.indexOf(user) != -1) {
 	body.data.coins = 999;
