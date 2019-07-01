@@ -2,15 +2,8 @@ let user = '/app_api/v5/getuserinfo/';
 let coin = '/app_api/v5/coin_account/';
 let ticket = '/app_api/v5/getuserinfo_ticket/';
 
-let body = "";
 let url = $request.url;
-
-try {
-body = JSON.parse($response.body);
-}
-catch(error) {
-$done({});
-}
+let body = JSON.parse($response.body);
 
 if (url.indexOf(user) != -1) {
 	body.data.coins = 999;
@@ -31,6 +24,6 @@ body = JSON.stringify(body);
 
 $done({body});
 
-// http-response getuserinfo-globalapi.zymk.cn script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/zymk.js,requires-body = true
+// http-response getuserinfo-globalapi.zymk.cn/app_api/v5/(getuserinfo|coin_account|getuserinfo_ticket)/ script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/zymk.js,requires-body = true
 
 // hostname = getuserinfo-globalapi.zymk.cn
