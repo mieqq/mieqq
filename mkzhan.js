@@ -26,8 +26,6 @@ if (url.indexOf(info) != -1) {
 	body.code = "200";
 	body.message = "用户已购买过该章节可以直接阅读";
 	body.data.pass_type = "4";
-	body.data.key = "auth_key";
-	body.data.value = "1593192429-0-0-4d524d8ddb6654a620037157bf616bbf";
 } else {
 	$done({});
 }
