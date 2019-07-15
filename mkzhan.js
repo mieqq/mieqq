@@ -4,7 +4,7 @@ let info = "member.mkzcdn.com/user/funds/info/"
 let url = $request.url;
 
 if (url.indexOf(info) != -1) {
-	body = JSON.parse($response.body);
+	let body = JSON.parse($response.body);
 	body.data.gold = "999";
 	body.data.ticket = "999";
 	body.data.is_vip = "1";
@@ -15,7 +15,7 @@ if (url.indexOf(info) != -1) {
 	body = JSON.stringify(body);
 	$done({body});
 } else if (url.indexOf(buy) != -1) {
-	body = JSON.parse($response.body);
+	let body = JSON.parse($response.body);
 	body.code = "200";
 	body.message = "购买成功";
 	body = JSON.stringify(body);
