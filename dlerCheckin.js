@@ -38,3 +38,4 @@ $httpClient.post(table, function(error, response, data){
 //cron "0 * * * *" script-path=test.js
 //4. 上面的 crontab "0 * * * *" 为每小时0分触发，可以自己查表更改
 //5. 不需要通知可以注释掉 $notification 所在行
+//
