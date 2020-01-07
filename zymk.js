@@ -27,3 +27,4 @@ $done({body});
 // http-response getuserinfo-globalapi.zymk.cn/app_api/v5/(getuserinfo|coin_account|getuserinfo_ticket)/ script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/zymk.js,requires-body = true
 
 // hostname = getuserinfo-globalapi.zymk.cn
+//
