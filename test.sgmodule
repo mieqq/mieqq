@@ -1,0 +1,9 @@
+#!name=SF
+#!desc=Test.
+#!system=ios
+
+[Script]
+test = type=http-response,pattern=https://goic.sf-express.com/vrms/api/getappupdateinfo,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/test.js,script-update-interval=0
+
+[MITM]
+hostname = %APPEND% goic.sf-express.com
