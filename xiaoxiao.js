@@ -3,7 +3,7 @@ const ad = 'ssp-svr/ssp/list3';
 const adold = 'getGlobalData';
 const url = $request.url;
 
-function buildReponse(body, headers) {
+function modifyBody(body) {
     if (url.indexOf(path1) != -1){
 	body.data.uinfo["down_daily_remainders"] = "666";
 	body.data.uinfo["play_daily_remainders"] = "666";
@@ -17,7 +17,7 @@ function buildReponse(body, headers) {
         delete body.data.adgroups;
         delete body.data.iOS_adgroups;
     }
-    return {response: {body: JSON.stringify(body), headers}};
+    return JSON.stringify(body);
 }
 
 let request = {
@@ -30,8 +30,9 @@ $httpClient.get(request, function(error, response, data) {
         $done({});
     } else {
         let body = JSON.parse(data); 
+        body = modifyBody(body);
         let headers = response.headers;
         delete headers["Transfer-Encoding"]
-        $done(buildReponse(body, headers));
+        $done({response: {body, headers}});
     }
 });
