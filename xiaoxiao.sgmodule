@@ -1,0 +1,8 @@
+#!name=小小影视
+#!desc=小小影视Vip
+
+[Script]
+xiaoxiao = type=http-request,pattern=xiaoxiaoapps\.com/(getGlobalData|ucp/index|ssp-svr/ssp/list3),timeout=20,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/xiaoxiao.js
+
+[MITM]
+hostname = %APPEND% *.xiaoxiaoapps.com
