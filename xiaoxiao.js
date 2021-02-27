@@ -10,14 +10,12 @@ function buildReponse(body, headers) {
 	body.data.uinfo["curr_group"] = "5";
 	body.data.user["isvip"] = "1";
 	body.data.user["goldcoin"] = "666";
-}
-    if (url.indexOf(ad) != -1) {
-         delete body.data.pmap
-    }
-    if (url.indexOf(adold) != -1) {
-         delete body.data.adrows
-         delete body.data.adgroups
-         delete body.data.iOS_adgroups
+    } else if (url.indexOf(ad) != -1) {
+        delete body.data.pmap;
+    } else if (url.indexOf(adold) != -1) {
+        delete body.data.adrows;
+        delete body.data.adgroups;
+        delete body.data.iOS_adgroups;
     }
     return {response: {body: JSON.stringify(body), headers}};
 }
@@ -29,7 +27,7 @@ let request = {
 
 $httpClient.get(request, function(error, response, data) {
     if (error) {
-        $done();
+        $done({});
     } else {
         let body = JSON.parse(data); 
         let headers = response.headers;
