@@ -1,3 +1,4 @@
+//修改自https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/BaiduCloud.js
 let obj = {
   "product_infos": [{
     "product_id": "5310897792128633390",
