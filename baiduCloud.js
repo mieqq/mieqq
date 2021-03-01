@@ -44,7 +44,6 @@ $httpClient[method](request, function(error, response, data) {
         body = JSON.stringify(obj);
         let headers = response.headers;
         delete headers["Transfer-Encoding"]
-        headers["Content-Encoding"] = "identity"
         $done({response: {body, headers}});
     }
 });
