@@ -1,8 +1,11 @@
 #!name=百度云VIP倍速播放
 #!desc=百度云VIP倍速播放
 
+[Header Rewrite]
+https:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user header-replace Connection keep-alive
+
 [Script]
-百度云VIP倍速播放 = type=http-request,pattern=https:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user,requires-body=1,max-size=0,timeout=20,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/baiduCloud.js
+百度云VIP倍速播放 = type=http-response,pattern=https:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user,requires-body=1,max-size=0,timeout=20,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/baiduCloud.js
 
 [MITM]
 hostname = %APPEND% pan.baidu.com
