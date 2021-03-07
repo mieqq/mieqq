@@ -27,23 +27,15 @@ let obj = {
     "reminderWithContent": [],
     "advertiseContent": []
   },
-  "request_id": 7501873289383874371
-};
-
-let request = {
-    url: $request.url,
-    headers: $request.headers,
-    body: $request.body,
-};
-
-let method = $request.method.toLowerCase()
-$httpClient[method](request, function(error, response, data) {
-    if (error) {
-        $done({});
-    } else {
-        body = JSON.stringify(obj);
-        let headers = response.headers;
-        delete headers["Transfer-Encoding"]
-        $done({response: {body, headers}});
+  "request_id": 7501873289383874371,
+  "guide_data": {
+    "title": "超级会员 SVIP",
+    "content": "已拥有极速下载+视频倍速特权",
+    "button": {
+      "text": "会员中心",
+      "action_url": "https://pan.baidu.com/wap/vip/user?from=myvip2#svip"
     }
-});
+  }
+};
+
+$done({body: JSON.stringify(obj)})
