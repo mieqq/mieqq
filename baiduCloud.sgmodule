@@ -1,6 +1,7 @@
 #!name=百度云VIP倍速播放
 #!desc=百度云VIP倍速播放
 
+
 [Header Rewrite]
 https:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user header-replace Connection keep-alive
 
