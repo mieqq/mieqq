@@ -1,0 +1,9 @@
+#!name=Camscanner Unlock
+#!desc=Unlock Camscanner Gold Membership
+#!system=ios
+
+[MITM]
+hostname = %APPEND% ap*.intsig.net
+
+[Map Local]
+https://(api|api-cs)\.intsig\.net/purchase/cs/query_property\? data=“https://raw.githubusercontent.com/mieqq/mieqq/master/scanner.json”
