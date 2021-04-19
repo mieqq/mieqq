@@ -21,7 +21,8 @@ function getUrlParams(url) {
 }
 
 function getUserInfo(url) {
-  return new Promise(resolve => $httpClient.head(url, (err, resp) => resolve(resp.headers["subscription-userinfo"])));
+  return new Promise(resolve => $httpClient.head(url, (err, resp) => 
+resolve(resp.headers["subscription-userinfo"] || resp.headers["subscription-userinfo"])));
 }
 
 function getDataUsage(info) {
