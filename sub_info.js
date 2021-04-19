@@ -1,3 +1,20 @@
+/*
+Surge配置参考注释，感谢@asukanana.
+----------------------------------------
+先将带有流量信息的订阅链接encode，用encode后的链接替换"url="后面的xxx，"due_day="后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。
+如需显示多个机场的信息，可以参照上述方法创建多个策略组以显示不同机场的信息，将Name替换成机场名字即可，脚本只需要一个。
+示例↓↓↓
+----------------------------------------
+[Proxy Group]
+Name1 = select, policy-path=http://sub.info?url=xxx&due_day=1
+
+Name2 = select, policy-path=http://sub.info?url=xxx&due_day=8
+
+[Script]
+Sub_info = type=http-request,pattern=http://sub\.info,script-path=sub_info.js
+----------------------------------------
+*/
+
 (async () => {
   let params = getUrlParams($request.url);
   let due_day = parseInt(params["due_day"]) || 1;
