@@ -8,8 +8,8 @@
   let total = usage.total;
   let days = getRmainingDays(due_day);
   let body = `${bytesToSize(used)} | ${bytesToSize(total)} | ${days} Day${days == 1 ? "" : "s"}  = ss, 1.2.3.4, 1234, encrypt-method=aes-128-gcm,password=1234`;
-    
-    $done({response: {body}});
+    let headers = {"Cache-Control": "no-store"}
+    $done({response: {body, headers}});
 })();
 
 function getUrlParams(url) {
