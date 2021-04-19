@@ -11,7 +11,7 @@ Name1 = select, policy-path=http://sub.info?url=xxx&due_day=1
 Name2 = select, policy-path=http://sub.info?url=xxx&due_day=8
 
 [Script]
-Sub_info = type=http-request,pattern=http://sub\.info,script-path=sub_info.js
+Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info.js
 ----------------------------------------
 */
 
