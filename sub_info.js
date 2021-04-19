@@ -22,7 +22,7 @@ function getUrlParams(url) {
 
 function getUserInfo(url) {
   return new Promise(resolve => $httpClient.head(url, (err, resp) => 
-resolve(resp.headers["subscription-userinfo"] || resp.headers["subscription-userinfo"])));
+resolve(resp.headers["subscription-userinfo"] || resp.headers["Subscription-userinfo"])));
 }
 
 function getDataUsage(info) {
