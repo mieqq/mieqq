@@ -24,6 +24,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   let used = usage.download + usage.upload;
   let total = usage.total;
   let days = getRmainingDays(reset_day);
+  console.log(total)
   let body = `${bytesToSize(used)} | ${bytesToSize(total)} | ${days} Day${days == 1 ? "" : "s"}  = ss, 1.2.3.4, 1234, encrypt-method=aes-128-gcm,password=1234`;
   
     $done({response: {body}});
@@ -38,13 +39,15 @@ function getUrlParams(url) {
 }
 
 function getUserInfo(url) {
-  return new Promise(resolve => $httpClient.head(url, (err, resp) => 
+  let headers = {"User-Agent" :"Quantumult X"}
+  let request = {headers, url}
+  return new Promise(resolve => $httpClient.head(request, (err, resp) => 
 resolve(resp.headers["subscription-userinfo"] || resp.headers["Subscription-userinfo"])));
 }
 
 function getDataUsage(info) {
   return Object.fromEntries(
-    info.split("; ").map(item => item.split("="))
+    info.match(/\w+=\d+/g).map(item => item.split("="))
     .map(([k, v]) => [k,parseInt(v)])
   );
 }
