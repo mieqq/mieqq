@@ -25,7 +25,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   let total = bytesToSize(usage.total);
   let expire = usage.expire || params.expire;
   let http = "http, localhost, 6152";
-  let body = `${used} | ${total}=${http}`;
+  let body = `Usage: ${used} | ${total}=${http}`;
   if (reset_day) {
     let days = getRmainingDays(reset_day);
     body += `\nTraffic Reset: ${days} Day${days == 1 ? "" : "s"}=${http}`;
@@ -86,5 +86,6 @@ function formatTimestamp( timestamp ) {
     let month = dateObj.getMonth() + 1;
     month = month < 10 ? '0' + month : month
     let day = dateObj.getDate();
-    return year +"-"+ month +"-" + day;      
+    day = day < 10 ? '0' + day : day
+    return year +"-"+ month +"-" + day;
 }
