@@ -17,15 +17,23 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 (async () => {
   let params = getUrlParams($request.url);
-  let reset_day = parseInt(params["due_day"] ||params["reset_day"] || 1);
+  let reset_day = parseInt(params["due_day"] ||params["reset_day"]);
   
   let info = await getUserInfo(params.url);
   let usage = getDataUsage(info);
   let used = bytesToSize(usage.download + usage.upload);
   let total = bytesToSize(usage.total);
-  let days = getRmainingDays(reset_day);
-  
-  let body = `${used} | ${total} | ${days} Day${days == 1 ? "" : "s"}  = http, localhost, 6152`;
+  let expire = usage.expire || params.expire;
+  let http = "http, localhost, 6152";
+  let body = `Used: ${used} | Total: ${total}=${http}`;
+  if (reset_day) {
+    let days = getRmainingDays(reset_day);
+    body += `\nTraffic Reset: ${days} Day${days == 1 ? "" : "s"}=${http}`
+  }
+  if (expire) {
+    expire = formatTimestamp(expire*1000);
+    body += `\nExpire Date: ${expire}=${http}`
+  }
   
     $done({response: {body}});
 })();
@@ -70,4 +78,13 @@ function bytesToSize(bytes) {
     sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     i = Math.floor(Math.log(bytes) / Math.log(k));
     return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
+}
+
+function formatTimestamp( timestamp ) {
+    var dateObj = new Date( timestamp );
+    var year = dateObj.getFullYear();
+    var month = dateObj.getMonth() + 1;
+    month = month < 10 ? '0' + month : month
+    var day = dateObj.getDate();
+    return year +"-"+ month +"-" + day;      
 }
