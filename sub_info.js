@@ -1,14 +1,15 @@
 /*
-Surge配置参考注释，感谢@asukanana，感谢@congcong.
+Surge配置参考注释，感谢@asukanana,感谢@congcong.
 ----------------------------------------
 先将带有流量信息的订阅链接encode，用encode后的链接替换"url="后面的xxx，"reset_day="后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。
+机场链接不带expire信息的，可以手动传入expire参数，如"expire=2022-02-01"
 如需显示多个机场的信息，可以参照上述方法创建多个策略组以显示不同机场的信息，将Name替换成机场名字即可，脚本只需要一个。
 示例↓↓↓
 ----------------------------------------
 [Proxy Group]
 Name1 = select, policy-path=http://sub.info?url=xxx&reset_day=1
 
-Name2 = select, policy-path=http://sub.info?url=xxx&reset_day=8
+Name2 = select, policy-path=http://sub.info?url=xxx&reset_day=8&expire=2022-02-01
 
 [Script]
 Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info.js
@@ -31,7 +32,9 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
     body += `\nTraffic Reset: ${days} Day${days == 1 ? "" : "s"}=${http}`;
   }
   if (expire) {
-    expire = formatTimestamp(expire*1000);
+    if (/^[\d]+$/.test(expire)) {
+      expire = formatTimestamp(expire*1000);
+    }
     body += `\nExpire Date: ${expire}=${http}`;
   }
   
