@@ -21,11 +21,11 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   
   let info = await getUserInfo(params.url);
   let usage = getDataUsage(info);
-  let used = usage.download + usage.upload;
-  let total = usage.total;
+  let used = bytesToSize(usage.download + usage.upload);
+  let total = bytesToSize(usage.total);
   let days = getRmainingDays(reset_day);
-  console.log(total)
-  let body = `${bytesToSize(used)} | ${bytesToSize(total)} | ${days} Day${days == 1 ? "" : "s"}  = ss, 1.2.3.4, 1234, encrypt-method=aes-128-gcm,password=1234`;
+  
+  let body = `${used} | ${total} | ${days} Day${days == 1 ? "" : "s"}  = http, localhost, 6152`;
   
     $done({response: {body}});
 })();
