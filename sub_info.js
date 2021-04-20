@@ -25,14 +25,14 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   let total = bytesToSize(usage.total);
   let expire = usage.expire || params.expire;
   let http = "http, localhost, 6152";
-  let body = `Used: ${used} | Total: ${total}=${http}`;
+  let body = `${used} | ${total}=${http}`;
   if (reset_day) {
     let days = getRmainingDays(reset_day);
-    body += `\nTraffic Reset: ${days} Day${days == 1 ? "" : "s"}=${http}`
+    body += `\nTraffic Reset: ${days} Day${days == 1 ? "" : "s"}=${http}`;
   }
   if (expire) {
     expire = formatTimestamp(expire*1000);
-    body += `\nExpire Date: ${expire}=${http}`
+    body += `\nExpire Date: ${expire}=${http}`;
   }
   
     $done({response: {body}});
@@ -74,17 +74,17 @@ function getRmainingDays(reset_day) {
 function bytesToSize(bytes) {
     bytes = parseInt(bytes);
     if (bytes === 0) return '0B';
-    var k = 1024;
+    let k = 1024;
     sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    i = Math.floor(Math.log(bytes) / Math.log(k));
+    let i = Math.floor(Math.log(bytes) / Math.log(k));
     return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
 }
 
 function formatTimestamp( timestamp ) {
-    var dateObj = new Date( timestamp );
-    var year = dateObj.getFullYear();
-    var month = dateObj.getMonth() + 1;
+    let dateObj = new Date( timestamp );
+    let year = dateObj.getFullYear();
+    let month = dateObj.getMonth() + 1;
     month = month < 10 ? '0' + month : month
-    var day = dateObj.getDate();
+    let day = dateObj.getDate();
     return year +"-"+ month +"-" + day;      
 }
