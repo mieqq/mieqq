@@ -121,20 +121,23 @@ function Sendnotification(usage, day_left, expire, params, body) {
  
   let title = params.title || "Sub Info";
   let used = usage.download + usage.upload;
+  body = body.split("\n");
+  let subtitle = body[0]
+  body = body.slice(1).join("\n")
   
-  if (used/usage.total > 0.8 && Counter.used[today] < 10) { 
-    $notification.post(title, `剩余流量不足${parseInt(used/usage.total*100)}%`, body)
+  if (used/usage.total > 0.8 && Counter.used[today] < 100) { 
+    $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body)
     Counter.used[today] += 1
   }
-  if (day_left && day_left < 3 && Counter["day_left"][today] < 10) {
-    $notification.post(title, `流量将在${day_left}天内重置`, body)
+  if (day_left && day_left < 3 && Counter["day_left"][today] < 100) {
+    $notification.post(`${title} | 流量将在${day_left}天后重置`,subtitle, body)
     Counter["day_left"][today] += 1
   }
-  if (expire && Counter.expire[today]  < 10) {
+  if (expire && Counter.expire[today]  < 100) {
     expire = (/^[\d]+$/.test(expire)) ? expire*1000 : expire;
     let diff = (new Date(expire) - now) / (1000*3600*24)
     if (diff < 10) {
-      $notification.post(title, `套餐剩余时间不足${parseInt(diff)}天`, body)
+      $notification.post(`${title} | 套餐剩余时间不足${parseInt(diff)}天`,subtitle, body)
       Counter.expire[today] += 1
     } 
   }
