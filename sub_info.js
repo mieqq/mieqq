@@ -2,8 +2,11 @@
 Surge配置参考注释，感谢@asukanana,感谢@congcong.
 ----------------------------------------
 先将带有流量信息的订阅链接encode，用encode后的链接替换"url="后面的xxx，"reset_day="后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。
+
 机场链接不带expire信息的，可以手动传入expire参数，如"expire=2022-02-01"
-增加参数"alert=1"，流量用量超过80%，流量重置2天前、套餐到期10天前会发送通知.
+
+增加参数"alert=1"，流量用量超过80%，流量重置2天前、套餐到期10天前会发送通知，&title=xxx可以自定义通知的标题。
+
 如需显示多个机场的信息，可以参照上述方法创建多个策略组以显示不同机场的信息，将Name替换成机场名字即可，脚本只需要一个。
 示例↓↓↓
 ----------------------------------------
@@ -119,15 +122,15 @@ function Sendnotification(usage, day_left, expire, params, body) {
   let title = params.title || "Sub Info";
   let used = usage.download + usage.upload;
   
-  if (used/usage.total > 0.8 && Counter.used[today] < 1) { 
+  if (used/usage.total > 0.8 && Counter.used[today] < 10) { 
     $notification.post(title, `剩余流量不足${parseInt(used/usage.total*100)}%`, body)
     Counter.used[today] += 1
   }
-  if (day_left && day_left < 3 && Counter["day_left"][today] < 1) {
+  if (day_left && day_left < 3 && Counter["day_left"][today] < 10) {
     $notification.post(title, `流量将在${day_left}天内重置`, body)
     Counter["day_left"][today] += 1
   }
-  if (expire && Counter.expire[today]  < 1) {
+  if (expire && Counter.expire[today]  < 10) {
     expire = (/^[\d]+$/.test(expire)) ? expire*1000 : expire;
     let diff = (new Date(expire) - now) / (1000*3600*24)
     if (diff < 10) {
