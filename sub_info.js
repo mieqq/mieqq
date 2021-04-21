@@ -125,15 +125,15 @@ function Sendnotification(usage, day_left, expire, params, body) {
   let subtitle = body[0]
   body = body.slice(1).join("\n")
   
-  if (used/usage.total > 0.8 && Counter.used[today] < 100) { 
+  if (used/usage.total > 0.8 && Counter.used[today] < 1) { 
     $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body)
     Counter.used[today] += 1
   }
-  if (day_left && day_left < 3 && Counter["day_left"][today] < 100) {
+  if (day_left && day_left < 3 && Counter["day_left"][today] < 1) {
     $notification.post(`${title} | 流量将在${day_left}天后重置`,subtitle, body)
     Counter["day_left"][today] += 1
   }
-  if (expire && Counter.expire[today]  < 100) {
+  if (expire && Counter.expire[today]  < 1) {
     expire = (/^[\d]+$/.test(expire)) ? expire*1000 : expire;
     let diff = (new Date(expire) - now) / (1000*3600*24)
     if (diff < 10) {
