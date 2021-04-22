@@ -5,7 +5,7 @@ Surge配置参考注释，感谢@asukanana,感谢@congcong.
 
 机场链接不带expire信息的，可以手动传入expire参数，如"expire=2022-02-01"
 
-增加参数"alert=1"，流量用量超过80%，流量重置2天前、套餐到期10天前会发送通知，&title=xxx可以自定义通知的标题。
+增加参数"alert=1"，流量用量超过80%，流量重置2天前、套餐到期10天前会发送通知，"&title=xxx" 可以自定义通知的标题。
 
 如需显示多个机场的信息，可以参照上述方法创建多个策略组以显示不同机场的信息，将Name替换成机场名字即可，脚本只需要一个。
 示例↓↓↓
@@ -31,19 +31,19 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   let total = bytesToSize(usage.total);
   let expire = usage.expire || params.expire;
   let http = "=http, localhost, 6152";
-  let body = `Usage: ${used} | ${total}`;
+  let info_list = [`Usage: ${used} | ${total}`];
   
   if (day_left) {
-    body += `\nTraffic Reset: ${day_left} Day${day_left == 1 ? "" : "s"}`;
+    info_list.push(`Traffic Reset: ${day_left} Day${day_left == 1 ? "" : "s"}`);
   }
   if (expire) {
     if (/^[\d]+$/.test(expire)) {
       expire = formatTimestamp(expire*1000);
     }
-    body += `\nExpire Date: ${expire}`;
+    info_list.push(`Expire Date: ${expire}`);
   }
-    Sendnotification(usage, day_left, expire, params, body);
-    body = body.split("\n").map(item => item + http).join("\n")
+    sendNotification(usage, day_left, expire, params, info_list);
+    let body = info_list.map(item => item + http).join("\n");
     $done({response: {body}});
 })();
 
@@ -103,12 +103,10 @@ function formatTimestamp( timestamp ) {
     return year +"-"+ month +"-" + day;
 }
 
-function Sendnotification(usage, day_left, expire, params, body) {
+function sendNotification(usage, day_left, expire, params, info_list) {
   if (!params.alert) return;
   let now = new Date();
-  let hour = now.getHours();
   let today = now.getDay();
-  //if (hour < 18 || hour > 22) return;
   
   let Counter = $persistentStore.read("SubInfo") || '{"expire": {}, "day_left": {}, "used": {}}'
   Counter = JSON.parse(Counter);
@@ -121,25 +119,24 @@ function Sendnotification(usage, day_left, expire, params, body) {
  
   let title = params.title || "Sub Info";
   let used = usage.download + usage.upload;
-  body = body.split("\n");
-  let subtitle = body[0]
-  body = body.slice(1).join("\n")
+  
+  let subtitle = info_list[0];
+  let body = info_list.slice(1).join("\n");
   
   if (used/usage.total > 0.8 && Counter.used[today] < 1) { 
-    $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body)
-    Counter.used[today] += 1
+    $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body);
+    Counter.used[today] += 1;
   }
   if (day_left && day_left < 3 && Counter["day_left"][today] < 1) {
-    $notification.post(`${title} | 流量将在${day_left}天后重置`,subtitle, body)
-    Counter["day_left"][today] += 1
+    $notification.post(`${title} | 流量将在${day_left}天后重置`,subtitle, body);
+    Counter["day_left"][today] += 1;
   }
   if (expire && Counter.expire[today]  < 1) {
-    expire = (/^[\d]+$/.test(expire)) ? expire*1000 : expire;
-    let diff = (new Date(expire) - now) / (1000*3600*24)
+    let diff = (new Date(expire) - now) / (1000*3600*24);
     if (diff < 10) {
-      $notification.post(`${title} | 套餐剩余时间不足${parseInt(diff)}天`,subtitle, body)
-      Counter.expire[today] += 1
+      $notification.post(`${title} | 套餐剩余时间不足${Math.ceil(diff)}天`,subtitle, body);
+      Counter.expire[today] += 1;
     } 
   }
- $persistentStore.write(JSON.stringify(Counter),"SubInfo")
+ $persistentStore.write(JSON.stringify(Counter),"SubInfo");
 }
