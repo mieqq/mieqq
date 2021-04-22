@@ -131,7 +131,7 @@ function sendNotification(usage, resetLeft, expire, params, infoList) {
     count.used += 1;
   }
   if (resetLeft && count.resetLeft < 1) {
-    if (resetLeft < 3) {
+    if (resetLeft < 2) {
       $notification.post(`${title} | 流量将在${resetLeft}天后重置`, subtitle, body);
       count.resetLeft += 1; 
     } else if (today == resetDay) {
