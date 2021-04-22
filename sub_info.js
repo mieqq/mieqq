@@ -22,15 +22,20 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 (async () => {
   let params = getUrlParams($request.url);
-  let reset_day = parseInt(params["due_day"] || params["reset_day"]);
-  
-  let day_left = getRmainingDays(reset_day);
   let info = await getUserInfo(params.url);
+  if (!info) {
+    $notification.post("SubInfo","","链接响应头不带有流量信息")
+    $done();
+  }
   let usage = getDataUsage(info);
   let used = bytesToSize(usage.download + usage.upload);
   let total = bytesToSize(usage.total);
+
   let expire = usage.expire || params.expire;
-  let http = "=http, localhost, 6152";
+  let reset_day = parseInt(params["due_day"] || params["reset_day"]); 
+  let day_left = getRmainingDays(reset_day);
+
+  let local_proxy = "=http, localhost, 6152";
   let info_list = [`Usage: ${used} | ${total}`];
   
   if (day_left) {
@@ -43,7 +48,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
     info_list.push(`Expire Date: ${expire}`);
   }
     sendNotification(usage, day_left, expire, params, info_list);
-    let body = info_list.map(item => item + http).join("\n");
+    let body = info_list.map(item => item + local_proxy).join("\n");
     $done({response: {body}});
 })();
 
