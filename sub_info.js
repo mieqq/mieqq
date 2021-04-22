@@ -125,15 +125,15 @@ function sendNotification(usage, restLeft, expire, params, infoList) {
   let body = infoList.slice(1).join("\n");
   let used = usage.download + usage.upload;
   
-  if (used/usage.total > 0.8) {
-    $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body);
+  if (used/usage.total > 0.8 && count.used < 1) {
+    $notification.post(`${title} | 剩余流量不足${parseInt((1-used/usage.total)*100)}%`,subtitle, body);
     count.used += 1;
   }
-  if (restLeft && restLeft < 3) {
+  if (restLeft && restLeft < 3 && count.restLeft < 1) {
     $notification.post(`${title} | 流量将在${restLeft}天后重置`, subtitle, body);
     count.restLeft += 1;  
   }
-  if (expire) {
+  if (expire && count.expire < 1) {
     let diff = (new Date(expire) - new Date()) / (1000*3600*24);
     if (diff < 10) {
       $notification.post(`${title} | 套餐剩余时间不足${Math.ceil(diff)}天`, subtitle, body);
