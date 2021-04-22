@@ -29,13 +29,13 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
   let expire = usage.expire || params.expire;
   let resetDay = parseInt(params["due_day"] || params["reset_day"]); 
-  let restLeft = getRmainingDays(resetDay);
+  let resetLeft = getRmainingDays(resetDay);
 
   let localProxy = "=http, localhost, 6152";
   let infoList = [`${used} | ${total}`];
   
-  if (restLeft) {
-    infoList.push(`Traffic Reset: ${restLeft} Day${restLeft == 1 ? "" : "s"}`);
+  if (resetLeft) {
+    infoList.push(`Traffic Reset: ${resetLeft} Day${resetLeft == 1 ? "" : "s"}`);
   }
   if (expire) {
     if (/^[\d]+$/.test(expire)) {
@@ -43,7 +43,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
     }
     infoList.push(`Expire Date: ${expire}`);
   }
-    sendNotification(usage, restLeft, expire, params, infoList);
+    sendNotification(usage, resetLeft, expire, params, infoList);
     let body = infoList.map(item => item + localProxy).join("\n");
     $done({response: {body}});
 })();
@@ -108,14 +108,14 @@ function formatTimestamp( timestamp ) {
     return year +"-"+ month +"-" + day;
 }
 
-function sendNotification(usage, restLeft, expire, params, infoList) {
+function sendNotification(usage, resetLeft, expire, params, infoList) {
   if (!params.alert) return;
   
   let today = new Date().getDate();
   //计数器，每天重置
   let Counter = JSON.parse($persistentStore.read("SubInfo") || '{}')
   if (!Counter[today]) {
-    Counter = {[today]: {"used": 0,"restLeft": 0,"expire": 0,}}
+    Counter = {[today]: {"used": 0,"resetLeft": 0,"expire": 0,}}
   }
   
   let count = Counter[today];
@@ -130,13 +130,13 @@ function sendNotification(usage, restLeft, expire, params, infoList) {
     $notification.post(`${title} | 剩余流量不足${parseInt((1-used/usage.total)*100)}%`,subtitle, body);
     count.used += 1;
   }
-  if (restLeft && count.restLeft < 1) {
-    if (restLeft < 3) {
-      $notification.post(`${title} | 流量将在${restLeft}天后重置`, subtitle, body);
-      count.restLeft += 1; 
+  if (resetLeft && count.resetLeft < 1) {
+    if (resetLeft < 3) {
+      $notification.post(`${title} | 流量将在${resetLeft}天后重置`, subtitle, body);
+      count.resetLeft += 1; 
     } else if (today == resetDay) {
       $notification.post(`${title} | 流量已重置`, subtitle, body);
-      count.restLeft += 1; 
+      count.resetLeft += 1; 
     }
   }
   if (expire && count.expire < 1) {
