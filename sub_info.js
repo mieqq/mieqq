@@ -22,12 +22,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 (async () => {
   let params = getUrlParams($request.url);
-  let info = await getUserInfo(params.url);
-  if (!info) {
-    $notification.post("SubInfo","","链接响应头不带有流量信息")
-    $done();
-  }
-  let usage = getDataUsage(info);
+  let usage = await getDataUsage(params.url);
   let used = bytesToSize(usage.download + usage.upload);
   let total = bytesToSize(usage.total);
 
@@ -70,7 +65,12 @@ function getUserInfo(url) {
   );
 }
 
-function getDataUsage(info) {
+async function getDataUsage(url) {
+  let info = await getUserInfo(url);
+  if (!info) {
+    $notification.post("SubInfo","","链接响应头不带有流量信息")
+    $done();
+  }
   return Object.fromEntries(
     info.match(/\w+=\d+/g).map(item => item.split("="))
     .map(([k, v]) => [k,parseInt(v)])
@@ -112,7 +112,8 @@ function sendNotification(usage, day_left, expire, params, info_list) {
   if (!params.alert) return;
   let now = new Date();
   let today = now.getDay();
-  
+
+  //计数器，每天重置
   let Counter = $persistentStore.read("SubInfo") || '{"expire": {}, "day_left": {}, "used": {}}'
   Counter = JSON.parse(Counter);
   Object.keys(Counter).forEach(k => {
@@ -123,10 +124,9 @@ function sendNotification(usage, day_left, expire, params, info_list) {
   })
  
   let title = params.title || "Sub Info";
-  let used = usage.download + usage.upload;
-  
   let subtitle = info_list[0];
   let body = info_list.slice(1).join("\n");
+  let used = usage.download + usage.upload;
   
   if (used/usage.total > 0.8 && Counter.used[today] < 1) { 
     $notification.post(`${title} | 剩余流量不足${parseInt(used/usage.total*100)}%`,subtitle, body);
