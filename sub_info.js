@@ -1,22 +1,25 @@
 /*
 Surge配置参考注释，感谢@asukanana,感谢@congcong.
+
+示例↓↓↓ 
 ----------------------------------------
-先将带有流量信息的订阅链接encode，用encode后的链接替换"url="后面的xxx，"reset_day="后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。
 
-机场链接不带expire信息的，可以手动传入expire参数，如"expire=2022-02-01"
-
-增加参数"alert=1"，流量用量超过80%，流量重置2天前、套餐到期10天前会发送通知，参数"title=xxx" 可以自定义通知的标题。
-
-如需显示多个机场的信息，可以参照上述方法创建多个策略组以显示不同机场的信息，将Name替换成机场名字即可，脚本只需要一个。
-示例↓↓↓
-----------------------------------------
 [Proxy Group]
-Name1 = select, policy-path=http://sub.info?url=xxx&reset_day=1
-
-Name2 = select, policy-path=http://sub.info?url=xxx&reset_day=8&expire=2022-02-01&alert=1&title=Name2
+AmyInfo = select, policy-path=http://sub.info?url=xxx&reset_day=8&alert=1&title=AmyInfo
 
 [Script]
 Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info.js
+----------------------------------------
+
+脚本不用修改，直接配置就好。
+
+先将带有流量信息的订阅链接encode，用encode后的链接替换"url="后面的xxx
+
+可选参数 &reset_day，后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。如"&reset_day=8",不加该参数不显示流量重置信息。
+
+可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01"
+
+可选参数 &alert，流量用量超过80%，流量重置2天前、流量重置、套餐到期10天前，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo"
 ----------------------------------------
 */
 
@@ -112,13 +115,13 @@ function sendNotification(usage, resetLeft, expire, params, infoList) {
   if (!params.alert) return;
   
   let today = new Date().getDate();
-  //计数器，每天重置
-  let Counter = JSON.parse($persistentStore.read("SubInfo") || '{}')
-  if (!Counter[today]) {
-    Counter = {[today]: {"used": 0,"resetLeft": 0,"expire": 0,}}
+  //通知计数器，每天重置
+  let notifyCounter = JSON.parse($persistentStore.read("SubInfo") || '{}')
+  if (!notifyCounter[today]) {
+    notifyCounter = {[today]: {"used": 0,"resetLeft": 0,"expire": 0,}}
   }
   
-  let count = Counter[today];
+  let count = notifyCounter[today];
 
   let title = params.title || "Sub Info";
   let subtitle = infoList[0];
@@ -146,5 +149,5 @@ function sendNotification(usage, resetLeft, expire, params, infoList) {
       count.expire += 1;
     } 
   }
-  $persistentStore.write(JSON.stringify(Counter),"SubInfo");
+  $persistentStore.write(JSON.stringify(notifyCounter),"SubInfo");
 }
