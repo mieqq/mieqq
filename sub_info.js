@@ -38,13 +38,13 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
   let infoList = [`${used} | ${total}`];
   
   if (resetLeft) {
-    infoList.push(`Traffic Reset: ${resetLeft} Day${resetLeft == 1 ? "" : "s"}`);
+    infoList.push(`流量重置: 剩余${resetLeft}天`);
   }
   if (expire) {
     if (/^[\d]+$/.test(expire)) {
       expire = formatTimestamp(expire*1000);
     }
-    infoList.push(`Expire Date: ${expire}`);
+    infoList.push(`套餐到期: ${expire}`);
   }
     sendNotification(usage, resetLeft, expire, params, infoList);
     let body = infoList.map(item => item + localProxy).join("\n");
