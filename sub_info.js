@@ -138,7 +138,7 @@ function sendNotification(usage, resetLeft, expire, params, infoList) {
       count.resetLeft += 1; 
     }
   }
-  if (expire && count.expire < 10) {
+  if (expire && count.expire < 1) {
     let diff = (new Date(expire) - new Date()) / (1000*3600*24);
     if (diff < 10) {
       $notification.post(`${title} | 套餐剩余时间不足${Math.ceil(diff)}天`, subtitle, body);
