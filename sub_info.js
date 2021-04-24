@@ -17,7 +17,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 可选参数 &reset_day，后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。如"&reset_day=8",不加该参数不显示流量重置信息。
 
-可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01"
+可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。
 
 可选参数 &alert，流量用量超过80%，流量重置2天前、流量重置、套餐到期10天前，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo"
 ----------------------------------------
@@ -41,10 +41,8 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
     infoList.push(`流量重置: 剩余${resetLeft}天`);
   }
   if (expire) {
-    if (/^[\d]+$/.test(expire)) {
-      expire = formatTimestamp(expire*1000);
-    }
-    infoList.push(`套餐到期: ${expire}`);
+    if (/^[\d]+$/.test(expire)) expire *= 1000;
+    infoList.push(`套餐到期: ${formatTime(expire)}`);
   }
     sendNotification(usage, resetLeft, expire, params, infoList);
     let body = infoList.map(item => item + localProxy).join("\n");
@@ -101,14 +99,12 @@ function bytesToSize(bytes) {
     return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
 }
 
-function formatTimestamp( timestamp ) {
-    let dateObj = new Date( timestamp );
+function formatTime( time ) {
+    let dateObj = new Date( time );
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
-    month = month < 10 ? '0' + month : month
     let day = dateObj.getDate();
-    day = day < 10 ? '0' + day : day
-    return year +"-"+ month +"-" + day;
+    return year +"年"+ month +"月" + day + "日";
 }
 
 function sendNotification(usage, resetLeft, expire, params, infoList) {
@@ -142,7 +138,7 @@ function sendNotification(usage, resetLeft, expire, params, infoList) {
       count.resetLeft += 1; 
     }
   }
-  if (expire && count.expire < 1) {
+  if (expire && count.expire < 10) {
     let diff = (new Date(expire) - new Date()) / (1000*3600*24);
     if (diff < 10) {
       $notification.post(`${title} | 套餐剩余时间不足${Math.ceil(diff)}天`, subtitle, body);
