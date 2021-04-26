@@ -33,20 +33,20 @@ let resetLeft = getRmainingDays(resetDay);
 
 (async () => {
   let usage = await getDataUsage(params.url);
-  let used = bytesToSize(usage.download + usage.upload);
-  let total = bytesToSize(usage.total);
+  let used = usage.download + usage.upload;
+  let total = usage.total;
   let expire = usage.expire || params.expire;
   let localProxy = "=http, localhost, 6152";
-  let infoList = [`${used} | ${total}`];
+  let infoList = [`${bytesToSize(used)} | ${bytesToSize(total)}`];
   
   if (resetLeft) {
-    infoList.push(`流量重置: 剩余${resetLeft}天`);
+    infoList.push(`流量重置：剩余${resetLeft}天`);
   }
   if (expire) {
     if (/^[\d]+$/.test(expire)) expire *= 1000;
-    infoList.push(`套餐到期: ${formatTime(expire)}`);
+    infoList.push(`套餐到期：${formatTime(expire)}`);
   }
-    sendNotification(usage, expire, infoList);
+    sendNotification(used/total, expire, infoList);
     let body = infoList.map(item => item + localProxy).join("\n");
     $done({response: {body}});
 })();
@@ -72,12 +72,12 @@ function getUserInfo(url) {
 async function getDataUsage(url) {
   let info = await getUserInfo(url);
   if (!info) {
-    $notification.post("SubInfo","","链接响应头不带有流量信息")
+    $notification.post("SubInfo", "", "链接响应头不带有流量信息")
     $done();
   }
   return Object.fromEntries(
     info.match(/\w+=\d+/g).map(item => item.split("="))
-    .map(([k, v]) => [k,parseInt(v)])
+    .map(([k, v]) => [k, parseInt(v)])
   );
 }
 
@@ -92,7 +92,7 @@ function getRmainingDays(resetDay) {
 function bytesToSize(bytes) {
     if (bytes === 0) return '0B';
     let k = 1024;
-    sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     let i = Math.floor(Math.log(bytes) / Math.log(k));
     return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
 }
@@ -105,7 +105,7 @@ function formatTime( time ) {
     return year + "年" + month + "月" + day + "日";
 }
 
-function sendNotification(usage, expire, infoList) {
+function sendNotification(usageRate, expire, infoList) {
   if (!params.alert) return;
 
   if (resetDay <= today) month += 1;
@@ -113,7 +113,7 @@ function sendNotification(usage, expire, infoList) {
   //通知计数器，每月重置日重置
   let notifyCounter = JSON.parse($persistentStore.read("SubInfo") || '{}')
   if (!notifyCounter[resetTime]) {
-    notifyCounter = {[resetTime]: {"usageRate": 0.8,"resetLeft": 3,"expire": 31, "resetDay": 1}}
+    notifyCounter = {[resetTime]: {"usageRate": 0.8, "resetLeft": 3, "expire": 31, "resetDay": 1}}
   }
   
   let count = notifyCounter[resetTime];
@@ -121,11 +121,9 @@ function sendNotification(usage, expire, infoList) {
   let title = params.title || "Sub Info";
   let subtitle = infoList[0];
   let body = infoList.slice(1).join("\n");
-  let used = (usage.download + usage.upload);
-  let usageRate = used/usage.total;
   
   if (usageRate > count.usageRate) {
-    $notification.post(`${title} | 剩余流量不足${Math.ceil((1-usageRate)*100)}%`,subtitle, body);
+    $notification.post(`${title} | 剩余流量不足${Math.ceil(100 - usageRate * 100)}%`, subtitle, body);
     while (usageRate > count.usageRate) {
       count.usageRate += 0.05;
     }
