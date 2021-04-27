@@ -113,7 +113,7 @@ function sendNotification(usageRate, expire, infoList) {
   //通知计数器，每月重置日重置
   let notifyCounter = JSON.parse($persistentStore.read("SubInfo") || '{}')
   if (!notifyCounter[resetTime]) {
-    notifyCounter = {[resetTime]: {"usageRate": 0.8, "resetLeft": 3, "expire": 31, "resetDay": 1}}
+    notifyCounter = {[resetTime]: {"usageRate": 80, "resetLeft": 3, "expire": 31, "resetDay": 1}}
   }
   
   let count = notifyCounter[resetTime];
@@ -121,11 +121,16 @@ function sendNotification(usageRate, expire, infoList) {
   let title = params.title || "Sub Info";
   let subtitle = infoList[0];
   let body = infoList.slice(1).join("\n");
+  usageRate = usageRate * 100;
   
   if (usageRate > count.usageRate) {
-    $notification.post(`${title} | 剩余流量不足${Math.ceil(100 - usageRate * 100)}%`, subtitle, body);
+    $notification.post(`${title} | 剩余流量不足${Math.ceil(100 - usageRate)}%`, subtitle, body);
     while (usageRate > count.usageRate) {
-      count.usageRate += 0.05;
+      if (count.usageRate < 95) {
+        count.usageRate += 5;
+      } else {
+        count.usageRate += 4;
+      }
     }
   }
   if (resetLeft && resetLeft < count.resetLeft) {
