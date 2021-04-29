@@ -19,7 +19,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。
 
-可选参数 &alert，流量用量超过80%，流量重置2天前、套餐快到期，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo"
+可选参数 &alert，流量用量超过80%，流量重置2天前、套餐快到期，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo",多个机场信息，且需要通知的情况，一定要加 title 参数，不然通知判断会出现问题
 ----------------------------------------
 */
 
@@ -63,8 +63,7 @@ function getUserInfo(url) {
   let headers = {"User-Agent": "Quantumult X"}
   let request = {headers, url}
   return new Promise(resolve => 
-    $httpClient.head(request, (err, resp) => 
-      resolve(resp.headers["subscription-userinfo"] || resp.headers["Subscription-userinfo"] || resp.headers["Subscription-Userinfo"] ||resp.headers["Subscription-UserInfo"])
+    $httpClient.head(request, (err, resp) => resolve(resp.headers[Object.keys(resp.headers).find(key => key.toLowerCase() === "subscription-userinfo")])
     )
   );
 }
@@ -107,21 +106,20 @@ function formatTime( time ) {
 
 function sendNotification(usageRate, expire, infoList) {
   if (!params.alert) return;
+  let title = params.title || "Sub Info";
+  let subtitle = infoList[0];
+  let body = infoList.slice(1).join("\n");
+  usageRate = usageRate * 100;
 
   if (resetDay <= today) month += 1;
   let resetTime = new Date(year, month, resetDay);
   //通知计数器，每月重置日重置
-  let notifyCounter = JSON.parse($persistentStore.read("SubInfo") || '{}')
+  let notifyCounter = JSON.parse($persistentStore.read(title) || '{}')
   if (!notifyCounter[resetTime]) {
     notifyCounter = {[resetTime]: {"usageRate": 80, "resetLeft": 3, "expire": 31, "resetDay": 1}}
   }
   
   let count = notifyCounter[resetTime];
-
-  let title = params.title || "Sub Info";
-  let subtitle = infoList[0];
-  let body = infoList.slice(1).join("\n");
-  usageRate = usageRate * 100;
   
   if (usageRate > count.usageRate) {
     $notification.post(`${title} | 剩余流量不足${Math.ceil(100 - usageRate)}%`, subtitle, body);
@@ -148,5 +146,5 @@ function sendNotification(usageRate, expire, infoList) {
       count.expire -= 5;
     } 
   }
-  $persistentStore.write(JSON.stringify(notifyCounter),"SubInfo");
+  $persistentStore.write(JSON.stringify(notifyCounter),title);
 }
