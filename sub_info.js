@@ -64,7 +64,7 @@ function getUserInfo(url) {
   let request = {headers, url}
   return new Promise(resolve => 
     $httpClient.head(request, (err, resp) => 
-      resolve(resp.headers["subscription-userinfo"] || resp.headers["Subscription-userinfo"] || resp.headers["Subscription-Userinfo"])
+      resolve(resp.headers["subscription-userinfo"] || resp.headers["Subscription-userinfo"] || resp.headers["Subscription-Userinfo"] ||resp.headers["Subscription-UserInfo"])
     )
   );
 }
