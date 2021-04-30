@@ -135,7 +135,7 @@ function sendNotification(usageRate, expire, infoList) {
     $notification.post(`${title} | 流量将在${resetLeft}天后重置`, subtitle, body);
     count.resetLeft = resetLeft;
   }
-  if (resetDay == today && count.resetDay) {
+  if (resetDay == today && count.resetDay && usageRate < 5) {
      $notification.post(`${title} | 流量已重置`, subtitle, body);
     count.resetDay = 0;
   }
