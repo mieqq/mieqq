@@ -148,7 +148,7 @@ function sendNotification(usageRate, expire, infoList) {
       }
     }
   }
-  if (resetLeft && resetLeft < count.resetLeft) {
+  if (resetLeft && resetLeft < count.resetLeft && resetDay != today) {
     $notification.post(
       `${title} | 流量将在${resetLeft}天后重置`,
       subtitle,
