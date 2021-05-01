@@ -62,18 +62,18 @@ function getUrlParams(url) {
 }
 
 function getUserInfo(url) {
-  let headers = { "User-Agent": "Quantumult X" };
-  let request = { headers, url };
+  let request = { headers: { "User-Agent": "Quantumult X" }, url };
   return new Promise((resolve) =>
-    $httpClient.head(request, (err, resp) =>
+    $httpClient.head(request, (err, resp) => {
+      if (err) $done();
       resolve(
         resp.headers[
           Object.keys(resp.headers).find(
             (key) => key.toLowerCase() === "subscription-userinfo"
           )
         ]
-      )
-    )
+      );
+    })
   );
 }
 
