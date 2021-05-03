@@ -5,7 +5,7 @@ Surge配置参考注释，感谢@asukanana,感谢@congcong.
 ----------------------------------------
 
 [Proxy Group]
-AmyInfo = select, policy-path=http://sub.info?url=机场节点链接&reset_day=1&alert=1
+AmyInfo = select, policy-path=http://sub.info?url=机场节点链接&reset_day=1&alert=1, update-interval=3600
 
 [Script]
 Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info.js
@@ -19,7 +19,7 @@ Sub_info = type=http-request,pattern=http://sub\.info,script-path=https://raw.gi
 
 可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。
 
-可选参数 &alert，流量用量超过80%，流量重置2天前、套餐快到期，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo",多个机场信息，且需要通知的情况，一定要加 title 参数，不然通知判断会出现问题
+可选参数 &alert，流量用量超过80%、流量重置2天前、流量重置、套餐快到期，这四种情况会发送通知，参数"title=xxx" 可以自定义通知的标题。如"&alert=1&title=AmyInfo",多个机场信息，且需要通知的情况，一定要加 title 参数，不然通知判断会出现问题
 ----------------------------------------
 */
 
