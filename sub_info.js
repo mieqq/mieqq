@@ -134,7 +134,7 @@ function sendNotification(usageRate, expire, infoList) {
 
   let count = notifyCounter[resetTime];
 
-  if (usageRate > count.usageRate) {
+  if (usageRate > count.usageRate && resetDay != today) {
     $notification.post(
       `${title} | 剩余流量不足${Math.ceil(100 - usageRate)}%`,
       subtitle,
