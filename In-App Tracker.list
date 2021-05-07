@@ -4167,14 +4167,12 @@ host, h.imguol.com, reject
 host, imimobile.com, reject
 host, tracking.immobilienscout24.de, reject
 host, ap.immomo.com, reject
-host, api.immomo.com, reject
 host, api-log.immomo.com, reject
 host, api-vip.immomo.com, reject
 host, app-log.immomo.com, reject
 host, connperf.immomo.com, reject
 host, game.immomo.com, reject
 host, live-api.immomo.com, reject
-host, live-log.immomo.com, reject
 host, live-m.immomo.com, reject
 host, paas-push-api.immomo.com, reject
 host, paas-push-api-log.immomo.com, reject
