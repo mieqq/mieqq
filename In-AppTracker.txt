@@ -5350,11 +5350,9 @@ gm.gds.mmstat.com
 log.gds.mmstat.com
 gdsns1.mmstat.com
 gj.mmstat.com
-gm.mmstat.com
 go.mmstat.com
 gxb.mmstat.com
 hd.mmstat.com
-log.mmstat.com
 oneid.mmstat.com
 perf.mmstat.com
 res.mmstat.com
