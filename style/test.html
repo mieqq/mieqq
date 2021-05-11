@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel='stylesheet' href='prism.css' type='text/css' />
+    <script type='text/javascript' src='prism.js'></script>
+  </head>
+  <body>
+    <pre style="white-space: pre-wrap;" class="line-numbers language-javascript">
+      <code>
+        var Prism = require('prismjs');
+        var loadLanguages = require('prismjs/components/');
+        loadLanguages(['haml']);
+        
+        // The code snippet you want to highlight, as a string
+        var code = "= ['hi', 'there', 'reader!'].join \" \"";
+        
+        // Returns a highlighted HTML string
+        var html = Prism.highlight(code, Prism.languages.haml, 'haml');
+      </code>
+    </pre>
+  </body>
+</html>
