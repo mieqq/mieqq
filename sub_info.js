@@ -64,16 +64,20 @@ function getUrlParams(url) {
 function getUserInfo(url) {
   let request = { headers: { "User-Agent": "Quantumult X" }, url };
   return new Promise((resolve) =>
-    $httpClient.head(request, (err, resp) => {
-      if (err) $done();
-      resolve(
-        resp.headers[
-          Object.keys(resp.headers).find(
-            (key) => key.toLowerCase() === "subscription-userinfo"
-          )
-        ]
-      );
-    })
+    setTimeout(
+      () =>
+      $httpClient.head(request, (err, resp) => {
+        if (err) $done();
+        resolve(
+          resp.headers[
+            Object.keys(resp.headers).find(
+              (key) => key.toLowerCase() === "subscription-userinfo"
+            )
+          ]
+        );
+      }),
+      2000
+    )
   );
 }
 
