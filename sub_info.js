@@ -76,7 +76,7 @@ function getUserInfo(url) {
           ]
         );
       }),
-      500
+      1000
     )
   );
 }
