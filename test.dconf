@@ -1,7 +1,5 @@
 #!MANAGED-CONFIG https://raw.githubusercontent.com/mieqq/mieqq/master/test.dconf interval=86400 strict=true
 
-
-
 [General]
 # 通用设置
 
