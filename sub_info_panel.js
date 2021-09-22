@@ -26,7 +26,6 @@ Sub_info = script-name=Sub_info
   let params = getUrlParams($argument)
   let resetDay = parseInt(params["reset_day"]);
   let resetLeft = getRmainingDays(resetDay);
-  console.log(resetLeft)
   let usage = await getDataUsage(params.url);
   let used = usage.download + usage.upload;
   let total = usage.total;
