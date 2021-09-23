@@ -49,7 +49,7 @@ Sub_info = script-name=Sub_info
 		title: params.title,
 		content: body,
                icon : params.icon || "airplane.circle",
-               iconColor: params.color || "#007aff",
+               "icon-color": params.color || "#007aff",
 	});
 })();
 
