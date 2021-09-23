@@ -5,7 +5,7 @@ Surge配置参考注释，感谢@asukanana,感谢@congcong.
 ----------------------------------------
 
 [Script]
-Sub_info = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info_panel.js,script-update-interval=0,argument=url=[URL encode 后的机场节点链接]&reset_day=1&title=AmyInfo
+Sub_info = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info_panel.js,script-update-interval=0,argument=url=[URL encode 后的机场节点链接]&reset_day=1&title=AmyInfo&icon=bonjour&color=#007aff
 
 [Panel]
 Sub_info = script-name=Sub_info
@@ -19,6 +19,10 @@ Sub_info = script-name=Sub_info
 可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。
 
 可选参数"title=xxx" 可以自定义标题。
+
+可选参数"icon=xxx" 可以自定义图标，内容为任意有效的 SF Symbol Name，如 bolt.horizontal.circle.fill
+
+可选参数"color=xxx" 当使用 icon 字段时，可传入 color 字段控制图标颜色，字段内容为颜色的 HEX 编码。如：color=#007aff
 ----------------------------------------
 */
 
@@ -44,7 +48,8 @@ Sub_info = script-name=Sub_info
   $done({
 		title: params.title,
 		content: body,
-               icon :"airplane.circle.fill"
+               icon : params.icon || "airplane.circle",
+               iconColor: params.iconColor || "#007aff",
 	});
 })();
 
@@ -60,8 +65,6 @@ function getUrlParams(url) {
 function getUserInfo(url) {
   let request = { headers: { "User-Agent": "Quantumult%20X" }, url };
   return new Promise((resolve) =>
-    setTimeout(
-      () =>
         $httpClient.head(request, (err, resp) => {
           if (err) $done();
           resolve(
@@ -72,7 +75,6 @@ function getUserInfo(url) {
             ]
           );
         }),
-    )
   );
 }
 
