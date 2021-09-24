@@ -8,7 +8,7 @@ Surge配置参考注释，感谢@asukanana,感谢@congcong.
 Sub_info = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info_panel.js,script-update-interval=0,argument=url=[URL encode 后的机场节点链接]&reset_day=1&title=AmyInfo&icon=bonjour&color=#007aff
 
 [Panel]
-Sub_info = script-name=Sub_info
+Sub_info = script-name=Sub_info,update-interval=600
 
 ----------------------------------------
 
@@ -27,7 +27,7 @@ Sub_info = script-name=Sub_info
 */
 
 (async () => {
-  let params = getUrlParams($argument)
+  let params = getUrlParams($argument);
   let resetDay = parseInt(params["reset_day"]);
   let resetLeft = getRmainingDays(resetDay);
   let usage = await getDataUsage(params.url);
@@ -43,14 +43,19 @@ Sub_info = script-name=Sub_info
     if (/^[\d]+$/.test(expire)) expire *= 1000;
     infoList.push(`到期：${formatTime(expire)}`);
   }
+  let now = new Date();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
+  hour = hour > 9 ? hour : "0" + hour;
+  minutes = minutes > 9 ? minutes : "0" + minutes;
 
   let body = infoList.join("\n");
   $done({
-		title: params.title,
-		content: body,
-               icon : params.icon || "airplane.circle",
-               "icon-color": params.color || "#007aff",
-	});
+    title: `${params.title} | ${hour}:${minutes}`,
+    content: body,
+    icon: params.icon || "airplane.circle",
+    "icon-color": params.color || "#007aff",
+  });
 })();
 
 function getUrlParams(url) {
@@ -65,16 +70,16 @@ function getUrlParams(url) {
 function getUserInfo(url) {
   let request = { headers: { "User-Agent": "Quantumult%20X" }, url };
   return new Promise((resolve) =>
-        $httpClient.head(request, (err, resp) => {
-          if (err) $done();
-          resolve(
-            resp.headers[
-              Object.keys(resp.headers).find(
-                (key) => key.toLowerCase() === "subscription-userinfo"
-              )
-            ]
-          );
-        }),
+    $httpClient.head(request, (err, resp) => {
+      if (!resp) $done();
+      resolve(
+        resp.headers[
+          Object.keys(resp.headers).find(
+            (key) => key.toLowerCase() === "subscription-userinfo"
+          )
+        ]
+      );
+    })
   );
 }
 
@@ -99,7 +104,7 @@ function getRmainingDays(resetDay) {
   let year = now.getFullYear();
   if (!resetDay) return 0;
   let daysInMonth = new Date(year, month + 1, 0).getDate();
-  
+
   if (resetDay > today) daysInMonth = 0;
 
   return daysInMonth - today + resetDay;
@@ -120,3 +125,4 @@ function formatTime(time) {
   let day = dateObj.getDate();
   return year + "年" + month + "月" + day + "日";
 }
+
