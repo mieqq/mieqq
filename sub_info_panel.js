@@ -27,23 +27,24 @@ Sub_info = script-name=Sub_info,update-interval=600
 */
 
 (async () => {
-  let params = getUrlParams($argument);
-  let resetDay = parseInt(params["reset_day"]);
-  let resetLeft = getRmainingDays(resetDay);
-  let usage = await getDataUsage(params.url);
-  if (!usage) $done();
-  let used = usage.download + usage.upload;
-  let total = usage.total;
-  let expire = params.expire || usage.expire;
-  let infoList = [`使用：${bytesToSize(used)} | ${bytesToSize(total)}`];
+  let args = getArgs();
+  let info = await getDataInfo(args.url);
+  if (!info) $done();
+  let resetDayLeft = getRmainingDays(parseInt(args["reset_day"]));
 
-  if (resetLeft) {
-    infoList.push(`重置：剩余${resetLeft}天`);
+  let used = info.download + info.upload;
+  let total = info.total;
+  let expire = args.expire || info.expire;
+  let content = [`用量：${bytesToSize(used)} | ${bytesToSize(total)}`];
+
+  if (resetDayLeft) {
+    content.push(`重置：剩余${resetDayLeft}天`);
   }
   if (expire) {
     if (/^[\d]+$/.test(expire)) expire *= 1000;
-    infoList.push(`到期：${formatTime(expire)}`);
+    content.push(`到期：${formatTime(expire)}`);
   }
+
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
@@ -51,16 +52,16 @@ Sub_info = script-name=Sub_info,update-interval=600
   minutes = minutes > 9 ? minutes : "0" + minutes;
 
   $done({
-    title: `${params.title} | ${hour}:${minutes}`,
-    content: infoList.join("\n"),
-    icon: params.icon || "airplane.circle",
-    "icon-color": params.color || "#007aff",
+    title: `${args.title} | ${hour}:${minutes}`,
+    content: content.join("\n"),
+    icon: args.icon || "airplane.circle",
+    "icon-color": args.color || "#007aff",
   });
 })();
 
-function getUrlParams(url) {
+function getArgs() {
   return Object.fromEntries(
-    url
+    $argument
       .split("&")
       .map((item) => item.split("="))
       .map(([k, v]) => [k, decodeURIComponent(v)])
@@ -91,14 +92,17 @@ function getUserInfo(url) {
   );
 }
 
-async function getDataUsage(url) {
-  const [err, info] = await getUserInfo(url).then(info => [null, info] ).catch(err => [err, null])
+async function getDataInfo(url) {
+  const [err, data] = await getUserInfo(url)
+    .then((data) => [null, data])
+    .catch((err) => [err, null]);
   if (err) {
-    console.log(err)
-    return
+    console.log(err);
+    return;
   }
+
   return Object.fromEntries(
-    info
+    data
       .match(/\w+=\d+/g)
       .map((item) => item.split("="))
       .map(([k, v]) => [k, parseInt(v)])
@@ -106,14 +110,19 @@ async function getDataUsage(url) {
 }
 
 function getRmainingDays(resetDay) {
+  if (!resetDay) return;
+
   let now = new Date();
   let today = now.getDate();
   let month = now.getMonth();
   let year = now.getFullYear();
-  if (!resetDay) return 0;
-  let daysInMonth = new Date(year, month + 1, 0).getDate();
+  let daysInMonth;
 
-  if (resetDay > today) daysInMonth = 0;
+  if (resetDay > today) {
+    daysInMonth = 0;
+  } else {
+    daysInMonth = new Date(year, month + 1, 0).getDate();
+  }
 
   return daysInMonth - today + resetDay;
 }
@@ -133,4 +142,3 @@ function formatTime(time) {
   let day = dateObj.getDate();
   return year + "年" + month + "月" + day + "日";
 }
-
