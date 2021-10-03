@@ -31,9 +31,10 @@ Sub_info = script-name=Sub_info,update-interval=600
   let resetDay = parseInt(params["reset_day"]);
   let resetLeft = getRmainingDays(resetDay);
   let usage = await getDataUsage(params.url);
+  if (!usage) $done();
   let used = usage.download + usage.upload;
   let total = usage.total;
-  let expire = usage.expire || params.expire;
+  let expire = params.expire || usage.expire;
   let infoList = [`使用：${bytesToSize(used)} | ${bytesToSize(total)}`];
 
   if (resetLeft) {
@@ -49,10 +50,9 @@ Sub_info = script-name=Sub_info,update-interval=600
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
 
-  let body = infoList.join("\n");
   $done({
     title: `${params.title} | ${hour}:${minutes}`,
-    content: body,
+    content: infoList.join("\n"),
     icon: params.icon || "airplane.circle",
     "icon-color": params.color || "#007aff",
   });
@@ -69,25 +69,33 @@ function getUrlParams(url) {
 
 function getUserInfo(url) {
   let request = { headers: { "User-Agent": "Quantumult%20X" }, url };
-  return new Promise((resolve) =>
+  return new Promise((resolve, reject) =>
     $httpClient.head(request, (err, resp) => {
-      if (!resp) $done();
-      resolve(
-        resp.headers[
-          Object.keys(resp.headers).find(
-            (key) => key.toLowerCase() === "subscription-userinfo"
-          )
-        ]
+      if (err != null) {
+        reject(err);
+        return;
+      }
+      if (resp.status !== 200) {
+        reject("Not Available");
+        return;
+      }
+      let header = Object.keys(resp.headers).find(
+        (key) => key.toLowerCase() === "subscription-userinfo"
       );
+      if (header) {
+        resolve(resp.headers[header]);
+        return;
+      }
+      reject("链接响应头不带有流量信息");
     })
   );
 }
 
 async function getDataUsage(url) {
-  let info = await getUserInfo(url);
-  if (!info) {
-    $notification.post("SubInfo", "", "链接响应头不带有流量信息");
-    $done();
+  const [err, info] = await getUserInfo(url).then(info => [null, info] ).catch(err => [err, null])
+  if (err) {
+    console.log(err)
+    return
   }
   return Object.fromEntries(
     info
