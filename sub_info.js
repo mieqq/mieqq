@@ -30,12 +30,9 @@ let year = now.getFullYear();
 let params = getUrlParams($request.url);
 let resetDay = parseInt(params["due_day"] || params["reset_day"]);
 let resetLeft = getRmainingDays(resetDay);
-let delay = 0;
 
 (async () => {
-  let is_enhanced = await is_enhanced_mode();
-  if (is_enhanced) delay = 2000;
-  let usage = await getDataUsage(params.url);
+  let usage = await getDataInfo(params.url);
   let used = usage.download + usage.upload;
   let total = usage.total;
   let expire = usage.expire || params.expire;
@@ -66,32 +63,39 @@ function getUrlParams(url) {
 
 function getUserInfo(url) {
   let request = { headers: { "User-Agent": "Quantumult%20X" }, url };
-  return new Promise((resolve) =>
-    setTimeout(
-      () =>
-        $httpClient.head(request, (err, resp) => {
-          if (err) $done();
-          resolve(
-            resp.headers[
-              Object.keys(resp.headers).find(
-                (key) => key.toLowerCase() === "subscription-userinfo"
-              )
-            ]
-          );
-        }),
-      delay
-    )
+  return new Promise((resolve, reject) =>
+    $httpClient.head(request, (err, resp) => {
+      if (err != null) {
+        reject(err);
+        return;
+      }
+      if (resp.status !== 200) {
+        reject("Not Available");
+        return;
+      }
+      let header = Object.keys(resp.headers).find(
+        (key) => key.toLowerCase() === "subscription-userinfo"
+      );
+      if (header) {
+        resolve(resp.headers[header]);
+        return;
+      }
+      reject("链接响应头不带有流量信息");
+    })
   );
 }
 
-async function getDataUsage(url) {
-  let info = await getUserInfo(url);
-  if (!info) {
-    $notification.post("SubInfo", "", "链接响应头不带有流量信息");
-    $done();
+async function getDataInfo(url) {
+  const [err, data] = await getUserInfo(url)
+    .then((data) => [null, data])
+    .catch((err) => [err, null]);
+  if (err) {
+    console.log(err);
+    return;
   }
+
   return Object.fromEntries(
-    info
+    data
       .match(/\w+=\d+/g)
       .map((item) => item.split("="))
       .map(([k, v]) => [k, parseInt(v)])
@@ -179,12 +183,4 @@ function sendNotification(usageRate, expire, infoList) {
     }
   }
   $persistentStore.write(JSON.stringify(notifyCounter), title);
-}
-
-async function is_enhanced_mode() {
-  return new Promise((resolve) =>
-    $httpAPI("GET", "v1/features/enhanced_mode", null, (data) => {
-      resolve(data.enabled);
-    })
-  );
 }
