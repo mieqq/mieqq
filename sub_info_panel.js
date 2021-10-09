@@ -103,7 +103,7 @@ async function getDataInfo(url) {
 
   return Object.fromEntries(
     data
-      .match(/\w+=\d+/g)
+      .match(/\w+=[\d.eE+]+/g)
       .map((item) => item.split("="))
       .map(([k, v]) => [k, parseInt(v)])
   );
