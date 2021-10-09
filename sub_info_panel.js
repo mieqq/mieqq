@@ -105,7 +105,7 @@ async function getDataInfo(url) {
     data
       .match(/\w+=[\d.eE+]+/g)
       .map((item) => item.split("="))
-      .map(([k, v]) => [k, parseInt(v)])
+      .map(([k, v]) => [k, parseInt(Number(v))])
   );
 }
 
