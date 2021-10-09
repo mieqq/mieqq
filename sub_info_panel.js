@@ -77,7 +77,7 @@ function getUserInfo(url) {
         return;
       }
       if (resp.status !== 200) {
-        reject("Not Available");
+        reject(resp.status);
         return;
       }
       let header = Object.keys(resp.headers).find(
@@ -105,7 +105,7 @@ async function getDataInfo(url) {
     data
       .match(/\w+=[\d.eE+]+/g)
       .map((item) => item.split("="))
-      .map(([k, v]) => [k, parseInt(Number(v))])
+      .map(([k, v]) => [k, Number(v)])
   );
 }
 
