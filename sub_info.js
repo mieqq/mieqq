@@ -49,7 +49,7 @@ let resetDayLeft = getRmainingDays(resetDay);
     infoList.push(`流量重置：剩余${resetDayLeft}天`);
   }
   if (expire) {
-    if (/^[\d]+$/.test(expire)) expire *= 1000;
+    if (/^[\d.]+$/.test(expire)) expire *= 1000;
     infoList.push(`套餐到期：${formatTime(expire)}`);
   }
   sendNotification(used / total, expire, infoList);
