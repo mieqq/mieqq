@@ -15,12 +15,13 @@ const url2 = "https://e.189.cn/store/user/balance_new.do";
   let total = usage.total * 1024;
   let used = usage.used * 1024;
   let fee = balance.totalBalanceAvailable;
+  let voice = usage.voiceBalance;
   let args = getArgs();
   $done({
     title: `${args.title || "中国电信"} | ${getTime()}`,
     content: `流量：${bytesToSize(used)} | ${bytesToSize(total)}\n余额：${
       fee / 100
-    } 元`,
+    } 元\n语音：${voice} 分钟`,
     icon: args.icon || "antenna.radiowaves.left.and.right.circle",
     "icon-color": args.color || "#5E5CDE",
   });
@@ -87,4 +88,3 @@ function getArgs() {
       .map(([k, v]) => [k, decodeURIComponent(v)])
   );
 }
-
