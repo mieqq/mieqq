@@ -53,7 +53,7 @@ let resetDayLeft = getRmainingDays(resetDay);
     infoList.push(`套餐到期：${formatTime(expire)}=socks5,127.0.0.1, 6153`);
   }
   sendNotification(used / total, expire, infoList);
-  let body = infoList.map((item) => item + localProxy).join("\n");
+  let body = infoList.join("\n");
   $done({ response: { body } });
 })();
 
