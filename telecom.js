@@ -9,8 +9,14 @@ const url2 = "https://e.189.cn/store/user/balance_new.do";
   }
 
   let request = JSON.parse($persistentStore.read("telecom"));
-  let usage = await Request(url, "post", request.headers, request.body);
-  let balance = await Request(url2, "post", request.headers, request.body); 
+  try {
+    let usage = await Request(url, "post", request.headers, request.body);
+    let balance = await Request(url2, "post", request.headers, request.body);
+  } catch (e) {
+  console.log(e)
+  $done()
+  return
+  }
   if (!usage || !balance  || (usage.result < 0)) $done();
   let total = usage.total * 1024;
   let used = usage.used * 1024;
