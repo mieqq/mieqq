@@ -14,6 +14,8 @@ Sub_info = script-name=Sub_info,update-interval=600
 
 先将带有流量信息的节点订阅链接encode，用encode后的链接替换"url="后面的[机场节点链接]
 
+（实在不会可以用这个捷径生成panel和脚本，https://www.icloud.com/shortcuts/fb5e8fb83de848b1b3906cd87636c480）
+
 可选参数 &reset_day，后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。如"&reset_day=8",不加该参数不显示流量重置信息。
 
 可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。
