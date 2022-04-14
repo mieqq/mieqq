@@ -10,6 +10,9 @@
   argument=匹配值=替换值，可以用正则匹配，如argument=/\w+/g=test，也支持多参数，如：argument=匹配值1=替换值1&匹配值2=替换值2
   
   response-body 脚本类型选择 type=http-response、request-body 脚本类型选择 type=http-request，注意必须打开需要body（requires-body=1）
+  
+  ps 修改json格式的键值对可以这样：
+  argument=key":\s?"(.*)"=key": "new_value"
 */
 
 function getRegex(str) {
