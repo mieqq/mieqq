@@ -10,10 +10,11 @@ function getRegex(str) {
 if (typeof $argument == "undefined") {
   $done({});
 } else {
-  if (script.type === "http-response") {
-    let body = $response.body;
+  let body;
+  if ($script.type === "http-response") {
+    body = $response.body;
   } else {
-    let body = $request.body;
+    body = $request.body;
   }
 
   $argument.split("&").forEach((item) => {
