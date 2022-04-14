@@ -9,6 +9,7 @@
    
   argument=匹配值=替换值，可以用正则匹配，如argument=/\w+/=test，也支持多参数，如：argument=匹配值1=替换值1&匹配值2=替换值2
   
+  response-body 脚本类型选择 type=http-response、request-body 脚本类型选择 type=http-request，注意必须打开需要body（requires-body=1）
 */
 
 function getRegex(str) {
