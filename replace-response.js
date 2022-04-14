@@ -10,11 +10,12 @@ function getRegex(str) {
 if (typeof $argument == "undefined") {
   $done({});
 } else {
-  let [match, replace] = $argument.split("=");
-  //console.log(match);
-  //console.log(replace);
-  let re = getRegex(match);
-  //console.log(re);
-  body = $response.body.replace(re, replace);
+    let body = $response.body;
+    $argument.split("&").forEach(item => {
+    let [match, replace] = item.split("=");
+    let re = getRegex(match);
+    body = body.replace(re, replace);
+  });
+  
   $done({ body });
 }
