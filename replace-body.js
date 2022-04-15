@@ -17,7 +17,7 @@
 */
 
 function getRegexp(re_str) {
-	let regParts = re_str.match(/^\/(.*?)\/([gim]*)$/);
+	let regParts = re_str.match(/^\/(.*?)\/([gims]*)$/);
 	if (regParts) {
 		return new RegExp(regParts[1], regParts[2]);
 	} else {
