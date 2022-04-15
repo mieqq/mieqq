@@ -11,34 +11,37 @@
   
   response-body 脚本类型选择 type=http-response、request-body 脚本类型选择 type=http-request，注意必须打开需要body（requires-body=1）
   
-  ps 修改json格式的键值对可以这样：
-  argument=key":\s?"(.*)"=key": "new_value"
+  tips 修改json格式的键值对可以这样：
+  argument=("key"):\s?"(.+?)"=$1: "new_value"
+  
 */
 
-function getRegex(str) {
-  let regParts = str.match(/^\/(.*?)\/([gim]*)$/);
-  if (regParts) {
-    return new RegExp(regParts[1], regParts[2]);
-  } else {
-    return new RegExp(str);
-  }
+function getRegexp(re_str) {
+	let regParts = re_str.match(/^\/(.*?)\/([gim]*)$/);
+	if (regParts) {
+		return new RegExp(regParts[1], regParts[2]);
+	} else {
+		return new RegExp(re_str);
+	}
 }
 
 if (typeof $argument == "undefined") {
-  $done({});
+	$done({});
 } else {
-  let body;
-  if ($script.type === "http-response") {
-    body = $response.body;
-  } else {
-    body = $request.body;
-  }
+	let body;
+	if ($script.type === "http-response") {
+		body = $response.body;
+	} else if ($script.type === "http-request") {
+		body = $request.body;
+	} else {
+		$done({});
+	}
 
-  $argument.split("&").forEach((item) => {
-    let [match, replace] = item.split("=");
-    let re = getRegex(match);
-    body = body.replace(re, replace);
-  });
+	$argument.split("&").forEach((item) => {
+		let [match, replace] = item.split("=");
+		let re = getRegexp(match);
+		body = body.replace(re, replace);
+	});
 
-  $done({ body });
+	$done({ body });
 }
