@@ -6,9 +6,9 @@ https://service.ilovepdf.com/v1/user url response-body false response-body true
    
   可改写为 Surge：
 [Script] 
-test = type=http-response,pattern=httpbin.org/get,requires-body=1,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/replace-body.js, argument=要匹配的值=替换的值
+test = type=http-response,pattern=httpbin.org/get,requires-body=1,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/replace-body.js, argument=false=true
 
-argument=匹配值=替换值
+argument=要匹配值=作为替换的值
 支持正则：如argument=\w+=test
 支持正则修饰符：如argument=/\w+/g=test
 支持多参数，如：argument=匹配值1=替换值1&匹配值2=替换值2
