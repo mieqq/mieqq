@@ -1,0 +1,9 @@
+#!name=test
+#!desc=test
+#!system=ios
+
+[General]
+force-http-engine-hosts = %APPEND% test
+
+[MITM]
+hostname = %APPEND% test.test
