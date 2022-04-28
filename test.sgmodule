@@ -3,7 +3,7 @@
 #!system=ios
 
 [General]
-force-http-engine-hosts = %APPEND% test
+force-http-engine-hosts = %APPEND% test.test
 
 [MITM]
-hostname = %APPEND% test.test
+hostname = %APPEND% test.test,test.test.test
