@@ -5,4 +5,4 @@
 # yunbusiness.ccb.com：建行生活
 
 [General]
-skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com,www.apple.com
+skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com
