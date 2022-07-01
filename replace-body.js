@@ -17,7 +17,7 @@ argument=要匹配值=作为替换的值
 
 tips 
 修改json格式的键值对可以这样：
-argument=("key"):\s?"(.+?)"->$1: "new_value"
+argument=("key")\s?:\s?"(.+?)"->$1: "new_value"
 
 s修饰符可以让.匹配换行符，如 argument=/.+/s->hello
   
@@ -43,7 +43,9 @@ if (typeof $argument == "undefined") {
 	} else {
 		$done({});
 	}
-
+        if (!body) {
+          $done({})
+        }
 	$argument.split("&").forEach((item) => {
 		let [match, replace] = item.split("->");
 		let re = getRegexp(match);
