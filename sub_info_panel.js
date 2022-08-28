@@ -26,6 +26,8 @@ Sub_info = script-name=Sub_info,update-interval=600
 
 可选参数"color=xxx" 当使用 icon 字段时，可传入 color 字段控制图标颜色，字段内容为颜色的 HEX 编码。如：color=#007aff
 ----------------------------------------
+
+有些服务端不支持head访问，可以添加参数&method=get
 */
 
 let args = getArgs();
