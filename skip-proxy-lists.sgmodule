@@ -3,10 +3,11 @@
 
 [General]
 
-skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn
+skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,mbank.psbc.com
 
 ## www.baidu.com：网上国网、多看阅读、顺丰金融、广东农信、丰云行、中国银行缤纷生活、通信行程卡app
 ## yunbusiness.ccb.com：建行生活
 ## wxh.wo.cn：沃小号
 ## gate.lagou.com：拉勾招聘
 ## www.abchina.com.cn: 中国农业银行
+## mbank.psbc.com：邮储银行
