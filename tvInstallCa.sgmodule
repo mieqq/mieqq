@@ -2,7 +2,7 @@
 #!desc=
 
 [General]
-http-api = mieq@0.0.0.0:6166
+http-api = mieq@127.0.0.1:6166
 
 [Rule]
 DOMAIN,ca.me,DIRECT
