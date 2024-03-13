@@ -1,0 +1,17 @@
+#!name=Apple TV CA
+#!desc=
+
+[General]
+http-api = mieq@0.0.0.0:6166
+
+[Rule]
+DOMAIN,ca.me,DIRECT
+
+[Host]
+ca.me = 127.0.0.1
+
+[URL Rewrite]
+(http://ca.me)/.* $1:6166/v1/mitm/ca header
+
+[Header Rewrite]
+ca.me header-add X-Key mieq
