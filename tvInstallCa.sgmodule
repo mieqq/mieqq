@@ -1,5 +1,10 @@
 #!name=Apple TV CA
-#!desc=
+#!desc=Surge tvOS 安装证书
+
+# 用法
+# 1. 到 Apple TV的设置->通用->隐私与安全性->在「共享 Apple TV 分析」栏点击遥控器「播放按钮」 -> 添加描述文件 
+# 2.输入 ca.me 然后完成并安装
+# 3.去Apple TV的设置->通用->关于->证书信任，设置刚刚下载的证书为可信
 
 [General]
 http-api = mieq@127.0.0.1:6166
