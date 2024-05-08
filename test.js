@@ -1,2 +1,2 @@
-console.log("test2")
+$notification.post("hello3","","")
 $done()
