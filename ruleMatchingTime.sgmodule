@@ -2,10 +2,12 @@
 #!desc=统计实际请求的规则匹配时间
 #!category=Panel
 #!system=ios
+#!arguments=cronExp:0 * * * * *,updateInterval:3600
+#!arguments-desc=- cronExp: 定义 Cron 表达式，默认每小时运行\n- updateInterval: 定义 Panel 更新间隔，默认 3600 s
 #!author=001,mieq
 
 [Script]
-ruleMatchingTime = type=cron,cronexp=0 * * * *,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/ruleMatchingTime.js
+ruleMatchingTime = type=cron,cronexp="{{{cronExp}}}",script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/ruleMatchingTime.js
 
 [Panel]
-ruleMatchingTime = script-name=ruleMatchingTime,update-interval=3600
+ruleMatchingTime = script-name=ruleMatchingTime,update-interval={{{updateInterval}}}
