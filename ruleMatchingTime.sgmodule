@@ -1,0 +1,11 @@
+#!name=Rule Macthing Time
+#!desc=统计实际请求的规则匹配时间
+#!category=Panel
+#!system=ios
+#!author=001,mieq
+
+[Script]
+ruleMatchingTime = type=cron,cronexp=0 * * * *,script-path=https://raw.githubusercontent.com/mieqq/mieqq/master/ruleMatchingTime.js
+
+[Panel]
+ruleMatchingTime = script-name=ruleMatchingTime,update-interval=3600
