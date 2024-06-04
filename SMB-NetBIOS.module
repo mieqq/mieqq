@@ -1,0 +1,7 @@
+#!name=SMB NetBIOS
+#!desc=用来在增强模式中使用 NetBIOS 主机名连接 SMB 服务器
+#!category=Quirks
+#!system=mac
+
+[General]
+always-real-ip = %INSERT% <simple-hostname>
