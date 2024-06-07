@@ -1,0 +1,7 @@
+#!name=Disable MitM On Lan
+#!desc=禁止 MitM 局域网设备
+#!arguments=Address:127.0.0.1
+#!arguments-desc=- Address: 仅对此来源 IP 的请求进行 MitM，可配置多个地址，逗号隔开
+
+[MITM]
+client-source-address = {{{Address}}}
