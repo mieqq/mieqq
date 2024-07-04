@@ -3,5 +3,6 @@
     "icons": [
      { "name": "surge", "url": "https://github.com/mieqq/mieqq/blob/master/surge.png?raw=true"},
      { "name": "bear", "url": "https://github.com/mieqq/mieqq/blob/master/bear.png?raw=true"},
+     { "name": "chatgpt", "url": "https://github.com/mieqq/mieqq/blob/master/chatgpt.png?raw=true"},
     ]
 }
