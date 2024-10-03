@@ -9,15 +9,7 @@
 [General]
 http-api = mieq@127.0.0.1:6166
 http-api-tls = false
-
-[Rule]
-DOMAIN,ca.me,DIRECT
-
-[Host]
-ca.me = 127.0.0.1
+force-http-engine-hosts = %APPEND% ca.me
 
 [URL Rewrite]
-(http://ca.me)/.* $1:6166/v1/mitm/ca header
-
-[Header Rewrite]
-ca.me header-add X-Key mieq
+http://ca.me/.* http://127.0.0.1:6166/v1/mitm/ca?x-key=mieq header
