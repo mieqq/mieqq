@@ -12,7 +12,7 @@ always-real-ip = %APPEND% easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,op
 # www.abchina.com.cn 中国农业银行
 # www.shanbay.com 扇贝单词消息中心
 # www.google.com 成都公积金
-# login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,api.ipify.org 中国邮政储蓄银行
+# login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,ibfp.psbc.com,api.ipify.org 中国邮政储蓄银行
 # easy-login.10099.com.cn 中国广电
 # *-update.xoyocdn.com 剑网三无界
 # id6.me 中国电信一键登陆
