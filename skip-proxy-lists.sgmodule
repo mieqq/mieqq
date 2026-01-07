@@ -5,7 +5,7 @@
 DOMAIN,msmp.abchina.com.cn,REJECT
 
 [General]
-skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me
+skip-proxy = %APPEND% www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me,www.163.com
 always-real-ip = %APPEND% easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,open.e.189.cn
 
 # www.baidu.com：网上国网、多看阅读、顺丰金融、广东农信、丰云行、中国银行缤纷生活、通信行程卡app、趣智校园、趣听音乐、光大手机银行、掌上12333、沃视频
@@ -19,3 +19,4 @@ always-real-ip = %APPEND% easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,op
 # easy-login.10099.com.cn 中国广电
 # *-update.xoyocdn.com 剑网三无界
 # id6.me 中国电信一键登陆
+# www.163.com 交管12123
